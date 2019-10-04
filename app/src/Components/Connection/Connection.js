@@ -13,6 +13,8 @@ export default class Connection extends React.Component {
 
     onClick = (text) => {
 
+        // Function called when a user clicks on the sign in or sign up button
+
         this.setState({
             ...this.state,
             page: text
@@ -21,6 +23,8 @@ export default class Connection extends React.Component {
     }
 
     render() {
+
+        // This component conditionnally renders the Main page, sign up page or sign in page
 
         if (this.state.page === 'MAIN_PAGE') {
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button } from '@material-ui/core'
-import { Auth } from 'aws-amplify'
+import { Auth, API } from 'aws-amplify'
 
 export default class SignUp extends React.Component {
 
@@ -84,27 +84,122 @@ export default class SignUp extends React.Component {
 
     onSubmitSignUp = (e) => {
 
-        e.preventDefault()
-
-        console.log(e)
-
-        this.setState({
-            ...this.state,
-            waitingForConfirmation: true
-        })
-
-    }
-
-    onSubmitConfirmationCode = (e) => {
+        // Function called when the user submits the sign up form
 
         e.preventDefault()
 
         this.setState({
             ...this.state,
             errors: {
-                confirmationCode: 'ERROR',
-                signUp: ''
+                signUp: '',
+                confirmationCode: ''
             }
+        })
+
+        Auth.signUp({
+            username: this.state.username,
+            password: this.state.password,
+            attributes: {
+                email: this.state.email
+            }
+        })
+        .then(data => {
+
+            // If the user signed up I output the message and form to confirm his email address
+
+            console.log("Successfully created a new user:", data)
+
+            this.setState({
+                ...this.state,
+                waitingForConfirmation: true
+            })
+
+        })
+        .catch(err => {
+            
+            // If the user couldn't sign up I output an error message explaining why it didn't work
+
+            console.log(err)
+
+            this.setState({
+                ...this.state,
+                errors: {
+                    signUp: err.message,
+                    confirmationCode: ''
+                }
+            })
+
+        })
+
+    }
+
+    onSubmitConfirmationCode = (e) => {
+
+        // Function called when the user submits the confirmation form
+
+        e.preventDefault()
+
+        Auth.confirmSignUp(this.state.username, this.state.confirmationCode)
+        .then(data => {
+
+            // If the confirmation worked succesfully
+
+            console.log("Success confirmating the user")
+            console.log(data)
+
+            let apiName = 'Matcha'
+            let path = '/users'
+            let myInit = {
+                body: {
+                    user: {
+                        username: this.state.username,
+                        first_name: this.state.firstName,
+                        last_name: this.state.lastName,
+                        email: this.state.email
+                    }
+                }
+            }
+            
+            API.post(apiName, path, myInit)
+            .then(data => {
+                
+                console.log("Successfully added the new user in the database")
+                console.log(data)
+
+                this.props.changePage('SIGN_IN')
+
+            })
+            .catch(error => {
+
+                console.log("Error adding the user in the database")
+                console.log(error)
+
+                this.setState({
+                    ...this.state,
+                    errors: {
+                        confirmationCode: "Error adding the user in the database",
+                        signUp: ''
+                    }
+                })
+
+            })
+
+        })
+        .catch(error => {
+            
+            // If there was an error with the confirmation
+
+            console.log("Error confirmating the user:")
+            console.log(error)
+
+            this.setState({
+                ...this.state,
+                errors: {
+                    confirmationCode: error.message,
+                    signUp: ''
+                }
+            })
+
         })
 
     }
@@ -218,7 +313,8 @@ export default class SignUp extends React.Component {
                             <br />
                             <input type="submit" value="Sign up"/>
                         </form>
-                        <b style={{color: 'red', marginTop: 7}}>{ this.renderErrorSignUp() }</b>
+                        <b style={{color: 'red', marginTop: 10, alignSelf: 'center'}}>{ this.renderErrorSignUp() }</b>
+                        <br />
                         {
                             this.renderUnderForm()
                         }

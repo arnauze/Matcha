@@ -1,8 +1,9 @@
 import React from 'react'
 import { Button } from '@material-ui/core'
-import { Auth } from 'aws-amplify'
+import { Auth, API } from 'aws-amplify'
+import { connect } from 'react-redux'
 
-export default class SignIn extends React.Component {
+class SignIn extends React.Component {
 
     state = {
         username: '',
@@ -44,15 +45,62 @@ export default class SignIn extends React.Component {
 
     onSubmitSignIn = (e) => {
 
+        // Function called when the user submits the sign in form
+
         e.preventDefault()
 
-        console.log(e)
+        Auth.signIn(this.state.username, this.state.password)
+        .then(data => {
 
-        this.setState({
-            ...this.state,
-            errors: {
-                signIn: 'ERROR'
-            }
+            console.log("Success signing in!")
+            console.log(data)
+
+            // After signing in with AWS Cognito, I call my API to get the connected user informations
+
+            let apiName = 'Matcha'
+            let path = '/users/' + data.username
+            let myInit = {}
+            
+            API.get(apiName, path, myInit)
+            .then(data => {
+                
+                console.log("Successfully called ", path)
+                console.log("Response: ", data)
+
+                // If the API Call worked, then I update the global state to connect the user and save its informations
+
+                let action = {
+                    type: 'UPDATE_USER',
+                    value: {
+                        user: data
+                    }
+                }
+    
+                this.props.dispatch(action)
+
+            })
+            .catch(error => {
+                
+                // If there was an error calling the API then I log an error message
+
+                console.log("Error calling ", path)
+                console.log("Error: ", error)
+
+            })
+
+        })
+        .catch(error => {
+
+            console.log("Error signing in ..")
+            console.log(error)
+
+            this.setState({
+                ...this.state,
+                errors: {
+                    signIn: error.message
+                }
+            })
+
         })
 
     }
@@ -111,3 +159,5 @@ export default class SignIn extends React.Component {
     }
 
 }
+
+export default connect()(SignIn)
