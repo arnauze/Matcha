@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default class Browsing extends React.Component {
+export default class FirstConnection extends React.Component {
 
     render() {
 
@@ -8,10 +8,10 @@ export default class Browsing extends React.Component {
 
             <div style={{margin: 10}}>
                 <p>
-                    Browsing
+                    FIRST CONNECTION
                 </p>
             </div>
-
+            
         )
 
     }

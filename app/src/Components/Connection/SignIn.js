@@ -58,10 +58,10 @@ class SignIn extends React.Component {
             // After signing in with AWS Cognito, I call my API to get the connected user informations
 
             let apiName = 'Matcha'
-            let path = '/users/' + data.username
+            let path = '/users/' + data.username + '/connect'
             let myInit = {}
             
-            API.get(apiName, path, myInit)
+            API.post(apiName, path, myInit)
             .then(data => {
                 
                 console.log("Successfully called ", path)

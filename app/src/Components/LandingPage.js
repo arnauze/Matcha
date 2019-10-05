@@ -1,5 +1,5 @@
 import React from 'react'
-import Amplify, { Auth } from 'aws-amplify'
+import Amplify, { Auth, API } from 'aws-amplify'
 import Connection from './Connection/Connection'
 import Pages from './Application/Pages'
 import { configs } from '../Constants/Constants'  // Importing the aws configs from my file
@@ -31,15 +31,32 @@ class LandingPage extends React.Component {
                 loading: false
             })
 
-            let action = {
-                type: 'UPDATE_USER',
-                value: {
-                    user: {
-                        username: 'arnauze'
+            let apiName = 'Matcha'
+            let path = '/users/' + data.username + '/connect'
+            let myInit = {}
+            
+            API.post(apiName, path, myInit)
+            .then(data => {
+                
+                console.log("Success call of ", path)
+                console.log(data)
+
+                let action = {
+                    type: 'UPDATE_USER',
+                    value: {
+                        user: data
                     }
                 }
-            }
-            this.props.dispatch(action)
+
+                this.props.dispatch(action)
+
+            })
+            .catch(error => {
+            
+                console.log("Error calling ", path)
+                console.log(error)
+
+            })
 
         })
         .catch(error => {
@@ -90,7 +107,9 @@ class LandingPage extends React.Component {
 
                 return (
                 
-                    <Pages />
+                    <Pages
+                    isFirstConnection={this.props.user.info.is_first_connection}
+                    />
     
                 )
 

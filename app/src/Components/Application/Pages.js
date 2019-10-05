@@ -5,8 +5,13 @@ import BottomBar from './Helpers/BottomBar'
 
 export default class Pages extends React.Component {
 
-    state = {
-        page: 'BROWSING'
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            page: props.isFirstConnection ? 'PROFILE' : 'BROWSING'
+        }
+
     }
 
     changePage = page => {

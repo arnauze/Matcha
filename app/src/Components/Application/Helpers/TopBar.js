@@ -2,7 +2,10 @@ import React from 'react'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
-import AddIcon from '@material-ui/icons/Add'
+import SearchIcon from '@material-ui/icons/Search'
+import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew'
+import HomeIcon from '@material-ui/icons/Home'
+import PersonIcon from '@material-ui/icons/Person'
 import { Auth, API } from 'aws-amplify'
 import { connect } from 'react-redux'
 
@@ -65,9 +68,18 @@ class TopBar extends React.Component {
         return (
 
             <AppBar position="fixed" color="primary">
-                <Toolbar>
+                <Toolbar style={{justifyContent: 'space-evenly'}}>
+                    <IconButton onClick={() => this.props.changePage('BROWSING')}>
+                        <HomeIcon style={{fontSize: 30}}/>
+                    </IconButton>
+                    <IconButton onClick={() => this.props.changePage('SEARCH')}>
+                        <SearchIcon style={{fontSize: 30}}/>
+                    </IconButton>
+                    <IconButton onClick={() => this.props.changePage('PROFILE')}>
+                        <PersonIcon  style={{fontSize: 30}}/>
+                    </IconButton>
                     <IconButton onClick={() => this.onSignOut()}>
-                        <AddIcon/>
+                        <PowerSettingsNewIcon style={{fontSize: 30}}/>
                     </IconButton>
                 </Toolbar>
             </AppBar>

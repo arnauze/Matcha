@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default class Browsing extends React.Component {
+export default class Search extends React.Component {
 
     render() {
 
@@ -8,7 +8,7 @@ export default class Browsing extends React.Component {
 
             <div style={{margin: 10}}>
                 <p>
-                    Browsing
+                    Search
                 </p>
             </div>
 

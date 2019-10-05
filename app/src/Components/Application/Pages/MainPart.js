@@ -1,5 +1,7 @@
 import React from 'react'
 import Browsing from './Browsing'
+import Profile from './Profile'
+import Search from './Search'
 
 export default class MainPart extends React.Component {
 
@@ -12,6 +14,18 @@ export default class MainPart extends React.Component {
                     <Browsing />
                 )
 
+            case 'PROFILE':
+                return (
+                    <Profile />
+                )
+
+            case 'SEARCH':
+                return (
+                    <Search />
+                )
+
+            default:
+                return null
         }
 
     }
@@ -20,7 +34,7 @@ export default class MainPart extends React.Component {
 
         return (
 
-            <div>
+            <div style={{position: 'absolute', top: 60}}>
                 { this.dispatchPage()}
             </div>
 
