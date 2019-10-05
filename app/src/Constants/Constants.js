@@ -1,0 +1,23 @@
+export const tags = [
+    'Cinema',
+    'Music',
+    'Comedy',
+    'Technology',
+    'Running',
+    'Art',
+    'Party',
+    'Concert',
+    'Surfing',
+    'Skating',
+    'Food',
+    'Startup',
+    'AI',
+    'Dance',
+    'Rap',
+    'Finance',
+    'Business',
+    'Alcohol',
+    'Weed',
+    'Yoga',
+    'Lifting'
+]
