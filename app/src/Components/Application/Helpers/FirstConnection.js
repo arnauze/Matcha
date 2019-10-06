@@ -98,8 +98,6 @@ class FirstConnection extends React.Component {
 
     onSubmitAll = () => {
 
-        // ERROR HERE IN THE BACKEND WITH THE PICKEDIMAGES VARIABLE
-
         let apiName = 'Matcha'
         let path = '/users/' + this.props.user.info.username + '/first_connection'
         let myInit = {
