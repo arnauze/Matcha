@@ -120,7 +120,7 @@ class Browsing extends React.Component {
             loading: true
         })
 
-        var newMatches = [...this.state.matches]
+        var newMatches = [...this.state.sourceData]
 
         if (this.state.filters.commonTags >= 0) {
             newMatches = newMatches.filter(this._filterCommonTags)
@@ -150,7 +150,7 @@ class Browsing extends React.Component {
 
     orderBy = text => {
 
-        var newMatches = this.state.filters.activated ? this.state.filters.matches : this.state.matches
+        var newMatches = this.state.filters.activated ? this.state.filters.matches : [...this.state.matches]
 
         this.setState({
             ...this.state,
@@ -276,6 +276,21 @@ class Browsing extends React.Component {
 
     }
 
+    onDeleteClick = (user) => {
+
+        this.setState({
+            ...this.state,
+            matches: this.state.matches.filter(item => item.username !== user.username)
+        })
+
+    }
+
+    onLikeClick = (user) => {
+
+        alert("new like")
+
+    }
+
     render() {
 
         console.log(this.state)
@@ -316,6 +331,8 @@ class Browsing extends React.Component {
                         onFilterClick={this.getFilteredMatches}
                         onResetClick={this.onResetClick}
                         changePage={this.changePage}
+                        onDeleteClick={this.onDeleteClick}
+                        onLikeClick={this.onLikeClick}
                         />
 
                     )
@@ -338,6 +355,8 @@ class Browsing extends React.Component {
                         onFilterClick={this.getFilteredMatches}
                         onResetClick={this.onResetClick}
                         changePage={this.changePage}
+                        onDeleteClick={this.onDeleteClick}
+                        onLikeClick={this.onLikeClick}
                         />
                     )
                 }
@@ -361,6 +380,8 @@ class Browsing extends React.Component {
                     onFilterClick={this.getFilteredMatches}
                     onResetClick={this.onResetClick}
                     changePage={this.changePage}
+                    onDeleteClick={this.onDeleteClick}
+                    onLikeClick={this.onLikeClick}
                     />
                 )
     

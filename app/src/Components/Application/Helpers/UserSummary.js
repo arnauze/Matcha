@@ -50,13 +50,13 @@ export default class UserSummary extends React.Component {
                     </div>
                 </div>
                 <div style={{display: 'flex', width: '20vw', justifyContent: 'space-between', position: 'absolute', bottom: 0}}>
-                    <Button>
+                    <Button onClick={() => this.props.onLikeClick(user)}>
                         <FavoriteIcon
                         color="secondary" 
                         style={{ fontSize: '2vw' }}
                         />
                     </Button>
-                    <Button>
+                    <Button onClick={() => this.props.onDeleteClick(user)}>
                         <DeleteIcon
                         color="secondary" 
                         style={{ fontSize: '2vw' }}

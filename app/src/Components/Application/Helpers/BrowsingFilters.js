@@ -3,11 +3,35 @@ import { Button } from '@material-ui/core'
 
 export default class BrowsingFilters extends React.Component {
 
+    state = {
+        disabled: true
+    }
+
+    onFilterClick = () => {
+
+        this.setState({
+            disabled: false
+        })
+
+        this.props.onFilterClick()
+
+    }
+
+    onResetClick = () => {
+
+        this.setState({
+            disabled: true
+        })
+
+        this.props.onResetClick()
+
+    }
+
     render() {
 
         return (
 
-            <div style={{width: '50vw', height: '15vh', backgroundColor: 'red', display: 'flex'}}>
+            <div style={{width: '50vw', height: '15vh', backgroundColor: 'white', display: 'flex'}}>
                 <div style={{flex: 4, display: 'flex', alignItems: 'center', flexDirection: 'column', margin: 10}}>
                     <b>Order by:</b>
                     <Button
@@ -49,10 +73,10 @@ export default class BrowsingFilters extends React.Component {
                     </div>
                 </div>
                 <div style={{flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'flex-start', flexDirection: 'column'}}>
-                    <Button variant="contained" color="primary" onClick={this.props.onFilterClick} style={{margin: 5}}>
+                    <Button variant="contained" color="primary" onClick={this.onFilterClick} style={{margin: 5}}>
                             Filter
                     </Button>
-                    <Button variant="contained" color="secondary" onClick={this.props.onResetClick} style={{margin: 5}}>
+                    <Button variant="contained" color="secondary" onClick={this.onResetClick} style={{margin: 5}} disabled={this.state.disabled}>
                             Reset
                     </Button>
                 </div>

@@ -258,12 +258,27 @@ class Search extends React.Component {
 
     }
 
+    onLikeClick = (user) => {
+
+        alert("new like")
+
+    }
+
+    onDeleteClick = (user) => {
+
+        this.setState({
+            ...this.state,
+            matches: this.state.matches.filter(item => item.username !== user.username)
+        })
+
+    }
+
     render() {
 
         console.log(this.state)
 
         return (
-            <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', width: '98vw', margin: 15}}>
+            <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', width: '98vw', margin: 15, marginBottom: 60}}>
                 <BrowsingFilters
                 orderBy={this.state.orderBy}
                 order={this.orderBy}
@@ -283,7 +298,12 @@ class Search extends React.Component {
                     {
                         this.state.matches.map((item, index) => (
                             <ListItem>
-                                <UserSummary user={item} key={index}/>
+                                <UserSummary
+                                user={item}
+                                onLikeClick={this.onLikeClick}
+                                onDeleteClick={this.onDeleteClick}
+                                key={index}
+                                />
                             </ListItem>
 
                         ))
