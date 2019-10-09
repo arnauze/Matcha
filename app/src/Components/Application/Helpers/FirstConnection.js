@@ -15,7 +15,8 @@ class FirstConnection extends React.Component {
         sexualPreferences: '',
         gender: '',
         enabled: false,
-        page: 'FIRST'
+        page: 'FIRST',
+        age: -1
     }
 
     checkIfEnabled = () => {
@@ -78,6 +79,15 @@ class FirstConnection extends React.Component {
 
     }
 
+    onAgeChange = (e) => {
+
+        this.setState({
+            ...this.state,
+            age: e.target.value
+        })
+
+    }
+
     onSexualPreferencesChange = (e) => {
 
         this.setState({
@@ -106,7 +116,8 @@ class FirstConnection extends React.Component {
                 sexualPreferences: this.state.sexualPreferences,
                 bio: this.state.bio,
                 pickedTags: this.state.pickedTags,
-                pickedImages: this.state.pickedImages
+                pickedImages: this.state.pickedImages,
+                age: this.state.age
             }
         }
 
@@ -168,6 +179,10 @@ class FirstConnection extends React.Component {
                     >
                         <label style={{margin: 5}}>
                             <b>To be able to match you with the right people, we need you to enter more informations:</b>
+                        </label>
+                        <label style={{display: 'flex', flexDirection: 'column', alignItems: 'center', margin: 5}}>
+                            How old are you ?
+                            <input type="number" onChange={this.onAgeChange}/>
                         </label>
                         <label
                         style={{display: 'flex', flexDirection: 'column', alignItems: 'center', margin: 5}}

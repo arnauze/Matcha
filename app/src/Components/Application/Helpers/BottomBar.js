@@ -56,7 +56,7 @@ export default class BottomBar extends React.Component {
 
         return (
             <div>
-                <AppBar position="fixed" color="primary" style={{bottom: 0, position: 'absolute', top: 'auto'}}>
+                <AppBar position="fixed" color="primary" style={{bottom: 0, top: 'auto'}}>
                     <Toolbar
                     style={{display: 'flex', justifyContent: 'center'}}
                     >

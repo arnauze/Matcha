@@ -2,6 +2,7 @@ import React from 'react'
 import Browsing from './Browsing'
 import Profile from './Profile'
 import Search from './Search'
+import EditProfile from '../Helpers/EditProfile'
 
 export default class MainPart extends React.Component {
 
@@ -11,12 +12,16 @@ export default class MainPart extends React.Component {
 
             case 'BROWSING':
                 return (
-                    <Browsing />
+                    <Browsing
+                    changePage={this.props.changePage}
+                    />
                 )
 
             case 'PROFILE':
                 return (
-                    <Profile />
+                    <Profile
+                    changePage={this.props.changePage}
+                    />
                 )
 
             case 'SEARCH':
@@ -24,6 +29,11 @@ export default class MainPart extends React.Component {
                     <Search />
                 )
 
+            case 'EDIT_PROFILE':
+                return (
+                    <EditProfile />
+                )
+            
             default:
                 return null
         }
