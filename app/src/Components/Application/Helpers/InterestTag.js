@@ -23,6 +23,7 @@ export default class InterestTag extends React.Component {
                 color={this.isChosen() ? "primary" : "default"}
                 aria-label="add"
                 onClick={() => this.props.onClick(this.props.tag)}
+                style={{minWidth: 100}}
                 >
                     {this.props.tag}
                 </Fab>

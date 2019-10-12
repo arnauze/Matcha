@@ -2,8 +2,10 @@ import React from 'react'
 import { Button } from '@material-ui/core'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import DeleteIcon from '@material-ui/icons/Delete'
+import { API } from 'aws-amplify'
+import { connect } from 'react-redux'
 
-export default class UserSummary extends React.Component {
+class UserSummary extends React.Component {
 
     renderFameRating = (user) => {
 
@@ -12,6 +14,30 @@ export default class UserSummary extends React.Component {
             return user.fame_rating
 
         }
+
+    }
+
+    onLikeClick = () => {
+
+        let apiName = 'Matcha'
+        let path = '/users/' + this.props.connectedUser.info.username + '/like/' + this.props.user.username
+        let myInit = {}
+
+        API.post(apiName, path, myInit)
+        .then(data => {
+
+            console.log("Success!")
+            console.log(data)
+
+            this.props.reload()
+
+        })
+        .catch(err => {
+
+            console.log("Error liking the user")
+            console.log(err)
+
+        })
 
     }
 
@@ -50,7 +76,7 @@ export default class UserSummary extends React.Component {
                     </div>
                 </div>
                 <div style={{display: 'flex', width: '20vw', justifyContent: 'space-between', position: 'absolute', bottom: 0}}>
-                    <Button onClick={() => this.props.onLikeClick(user)}>
+                    <Button onClick={() => this.onLikeClick(user)}>
                         <FavoriteIcon
                         color="secondary" 
                         style={{ fontSize: '2vw' }}
@@ -70,3 +96,11 @@ export default class UserSummary extends React.Component {
     }
 
 }
+
+const mapStateToProps = state => {
+    return {
+        connectedUser: state.user
+    }
+}
+
+export default connect(mapStateToProps)(UserSummary)

@@ -44,8 +44,8 @@ class Profile extends React.Component {
                         </div>
                         <div style={{width: '30vw', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly'}}>
                             {
-                                this.props.user.info.interests.map(item => (
-                                    <div>
+                                this.props.user.info.interests.map((item, index) => (
+                                    <div key={index}>
                                         {item}
                                     </div>
                                 ))

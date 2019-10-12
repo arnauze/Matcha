@@ -7,11 +7,16 @@ class Browsing extends React.Component {
 
     state = {
         loading: true,
-        page: 1,
         orderBy: 'common_tags'
     }
 
     componentDidMount() {
+
+        this.getMatches()
+
+    }
+
+    getMatches = () => {
 
         let apiName = 'Matcha'
         let path = '/browsing/user/' + this.props.user.info.username
@@ -285,12 +290,6 @@ class Browsing extends React.Component {
 
     }
 
-    onLikeClick = (user) => {
-
-        alert("new like")
-
-    }
-
     render() {
 
         console.log(this.state)
@@ -316,6 +315,7 @@ class Browsing extends React.Component {
                     return (
                     
                         <BrowsingComponent
+                        reload={this.getMatches}
                         user={user}
                         orderBy={this.state.orderBy}
                         order={this.orderBy}
@@ -340,6 +340,7 @@ class Browsing extends React.Component {
                 } else {
                     return (
                         <BrowsingComponent
+                        reload={this.getMatches}
                         user={user}
                         orderBy={this.state.orderBy}
                         order={this.orderBy}
@@ -365,6 +366,7 @@ class Browsing extends React.Component {
 
                 return (
                     <BrowsingComponent
+                    reload={this.getMatches}
                     user={null}
                     orderBy={this.state.orderBy}
                     order={this.orderBy}

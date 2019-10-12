@@ -5,8 +5,7 @@ import IconButton from '@material-ui/core/IconButton'
 import Menu from '@material-ui/core/Menu'
 import NotificationsIcon from '@material-ui/icons/Notifications'
 import NotificationItem from './NotificationItem'
-
-// const [anchorEl, setAnchorEl] = React.useState(null);
+import { sendNotification } from '../../../Functions/Functions'
 
 const connections = [
     'arnauze',
@@ -32,6 +31,14 @@ export default class BottomBar extends React.Component {
             ...this.state,
             open: true
         })
+
+        let path = "sendMessage"
+        let data = {
+            "to": "maxence",
+            "message": "YO COMMENT TU VAS"
+        }
+
+        sendNotification(path, data)
 
     }
 

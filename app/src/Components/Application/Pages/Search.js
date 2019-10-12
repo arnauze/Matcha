@@ -3,6 +3,7 @@ import BrowsingFilters from '../Helpers/BrowsingFilters'
 import { connect } from 'react-redux'
 import { API } from 'aws-amplify'
 import UserSummary from '../Helpers/UserSummary'
+import SearchFilters from '../Helpers/SearchFilters'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 
@@ -18,6 +19,11 @@ class Search extends React.Component {
             distance: -1,
             fameRating: -1
         },
+        searchFilters: {
+            tags: [],
+            age: [0, 99],
+            fameRating: [0, 5]
+        },
         matches: []
     }
 
@@ -32,15 +38,16 @@ class Search extends React.Component {
 
             console.log("Success fetching the matches")
             console.log(data)
+            console.log("================STARTING TO FILTER================")
 
             var newData = this.filter(data)
 
-            console.log("After filter")
+            console.log("================AFTER FILTER================")
             console.log(newData)
 
             var finalData = this.order(newData)
 
-            console.log("After order")
+            console.log("================AFTER ORDER================")
             console.log(finalData)
 
             this.setState({
@@ -80,18 +87,39 @@ class Search extends React.Component {
 
     _filterCommonTags = (item) => {
 
-        var a = this._getCommonTags(item)
-        var b = this.state.filters.commonTags
+        if (this.state.filters.commonTags >= 0) {
 
-        return a >= b
+            var a = this._getCommonTags(item)
+            var b = this.state.filters.commonTags
+
+        } 
+
+        var i = -1
+        var c = true
+
+        while (++i < this.state.searchFilters.tags.length) {
+
+            if (item.interests.findIndex(item => item === this.state.searchFilters.tags[i]) < 0) {
+                c = false
+            }
+
+        }
+
+        return (a && b) ? ((a >= b) && c) : c
+        
     }
 
     _filterMinAge = (item) => {
 
         var a = item.age
-        var b = this.state.filters.age
 
-        return a >= b
+        if (this.state.filters.age >= 0) {
+
+            var b = this.state.filters.age
+
+        }
+
+        return b ? ((a >= b) && ((a >= this.state.searchFilters.age[0]) && (a <= this.state.searchFilters.age[1]))) : ((a >= this.state.searchFilters.age[0]) && (a <= this.state.searchFilters.age[1]))
 
     }
 
@@ -107,9 +135,14 @@ class Search extends React.Component {
     _filterFameRating = (item) => {
 
         var a = item.fame_rating
-        var b = this.state.filters.fameRating
 
-        return a >= b
+        if (this.state.filters.fameRating >= 0) {
+
+            var b = this.state.filters.fameRating
+
+        }
+
+        return b ? ((a >= b) && ((a >= this.state.searchFilters.fameRating[0]) && (a <= this.state.searchFilters.fameRating[1]))) : ((a >= this.state.searchFilters.fameRating[0]) && (a <= this.state.searchFilters.fameRating[1]))
 
     }
 
@@ -117,18 +150,28 @@ class Search extends React.Component {
 
         var newMatches = [...matches]
 
-        if (this.state.filters.commonTags >= 0) {
-            newMatches = newMatches.filter(this._filterCommonTags)
-        }
-        if (this.state.filters.age >= 0) {
-            newMatches = newMatches.filter(this._filterMinAge)
-        }
+        console.log("***************ORIGINAL MATCHES***************")
+        console.log(newMatches)
+
+        newMatches = newMatches.filter(this._filterCommonTags)
+
+        console.log("***************AFTER COMMON TAGS***************")
+        console.log(newMatches)
+
+        newMatches = newMatches.filter(this._filterMinAge)
+
+        console.log("***************AFTER AGE***************")
+        console.log(newMatches)
+
         if (this.state.filters.distance >= 0) {
             newMatches = newMatches.filter(this._filterMinDistance)
         }
-        if (this.state.filters.fameRating >= 0) {
-            newMatches = newMatches.filter(this._filterFameRating)
-        }
+
+
+        newMatches = newMatches.filter(this._filterFameRating)
+
+        console.log("***************AFTER FAME RATING***************")
+        console.log(newMatches)
 
         return newMatches
 
@@ -220,9 +263,11 @@ class Search extends React.Component {
                 age: -1,
                 distance: -1,
                 fameRating: -1
-            },
-            matches: []
+            }
         })
+
+        this.getMatches()
+        
 
     }
 
@@ -258,17 +303,61 @@ class Search extends React.Component {
 
     }
 
-    onLikeClick = (user) => {
-
-        alert("new like")
-
-    }
-
     onDeleteClick = (user) => {
 
         this.setState({
             ...this.state,
             matches: this.state.matches.filter(item => item.username !== user.username)
+        })
+
+    }
+
+    onClick = (text) => {
+
+        if (this.state.searchFilters.tags.length > 0 && this.state.searchFilters.tags.indexOf(text) >= 0) {
+
+            this.setState({
+                ...this.state,
+                searchFilters: {
+                    ...this.state.searchFilters,
+                    tags: this.state.searchFilters.tags.filter(item => item !== text)
+                }
+            })
+
+        } else {
+
+            this.setState({
+                ...this.state,
+                searchFilters: {
+                    ...this.state.searchFilters,
+                    tags: [...this.state.searchFilters.tags, text]
+                }
+            })
+
+        }
+
+    }
+
+    onAgeChange = (event, newValue) => {
+
+        this.setState({
+            ...this.state,
+            searchFilters: {
+                ...this.state.searchFilters,
+                age: newValue
+            }
+        })
+
+    }
+
+    onFameRatingChange = (event, newValue) => {
+
+        this.setState({
+            ...this.state,
+            searchFilters: {
+                ...this.state.searchFilters,
+                fameRating: newValue
+            }
         })
 
     }
@@ -279,6 +368,15 @@ class Search extends React.Component {
 
         return (
             <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', width: '98vw', margin: 15, marginBottom: 60}}>
+                <SearchFilters
+                fameRating={this.state.searchFilters.fameRating}
+                age={this.state.searchFilters.age}
+                pickedTags={this.state.searchFilters.tags}
+                onClick={this.onClick}
+                onSearch={this.getMatches}
+                onFameRatingChange={this.onFameRatingChange}
+                onAgeChange={this.onAgeChange}
+                />
                 <BrowsingFilters
                 orderBy={this.state.orderBy}
                 order={this.orderBy}
@@ -297,12 +395,11 @@ class Search extends React.Component {
                 <List>
                     {
                         this.state.matches.map((item, index) => (
-                            <ListItem>
+                            <ListItem key={index}>
                                 <UserSummary
                                 user={item}
-                                onLikeClick={this.onLikeClick}
+                                reload={this.getMatches}
                                 onDeleteClick={this.onDeleteClick}
-                                key={index}
                                 />
                             </ListItem>
 

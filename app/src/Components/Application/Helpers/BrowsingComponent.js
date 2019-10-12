@@ -57,6 +57,17 @@ class BrowsingComponent extends React.Component {
 
     }
 
+    reload = () => {
+
+        this.setState({
+            ...this.state,
+            page: 1
+        })
+
+        this.props.reload()
+
+    }
+
     outputMatches = () => {
 
         var user = this.props.user
@@ -79,6 +90,7 @@ class BrowsingComponent extends React.Component {
                             </Button>
                         </div>
                         <UserSummary
+                        reload={this.reload}
                         user={user}
                         onLikeClick={this.onLikeClick}
                         onDeleteClick={this.onDeleteClick}
