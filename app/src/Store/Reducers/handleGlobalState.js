@@ -2,7 +2,8 @@ var initialState = {
     user: {
         isConnected: false,
         info: {}
-    }
+    },
+    reloadChat: false
 }
 
 export default function handleGlobalState(state = initialState, action) {
@@ -30,6 +31,13 @@ export default function handleGlobalState(state = initialState, action) {
                     isConnected: false,
                     info: {}
                 }
+            }
+            return nextState || state
+        
+        case 'RELOAD_CHAT':
+            nextState = {
+                ...state,
+                reloadChat: state.reloadChat ? false : true
             }
             return nextState || state
             

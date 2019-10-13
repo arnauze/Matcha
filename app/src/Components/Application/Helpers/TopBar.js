@@ -16,6 +16,10 @@ class TopBar extends React.Component {
 
         // Function called when the user tries to log out
 
+        var ws = new WebSocket('wss://30gbtaal39.execute-api.us-east-2.amazonaws.com/dev')
+
+        ws.close()
+
         Auth.signOut({global: true})
         .then(data => {
 

@@ -12,7 +12,7 @@ export function sendNotification(action, data) {
 
 }
 
-export function startWebsocket(user, updateState, notifications, updateUser) {
+export function startWebsocket(user, updateState, notifications, updateUser, reloadChat) {
 
     var ws = new WebSocket('wss://30gbtaal39.execute-api.us-east-2.amazonaws.com/dev')
 
@@ -41,23 +41,31 @@ export function startWebsocket(user, updateState, notifications, updateUser) {
         switch(body.type) {
 
             case 'connection':
-                if (body.data === 'delete') {
+                if (body.data === 'delete_connection') {
                     message = 'You lost a connection with ' + body.from + '!'
-                } else {
+                } else if (body.data === 'new_connection') {
                     message = 'You got a new a connection with ' + body.from + '!'
+                } else if (body.data === 'new_like') {
+                    message = body.from + ' just liked you!'
                 }
+                break;
+            case 'message':
+                message = 'You got a new message from ' + body.from + '!'
+                reloadChat()
+                break;
+            case 'visit':
+                message = body.from + ' just visited your profile!'
                 break;
             default:
                 message = "Error"
 
         }
 
-        notifications.push({data: message, timestamp: body.timestamp})
-
-
+        var newItem = {data: message, timestamp: Date.now()}
+        notifications.push(newItem)
 
         updateState({
-            notifications: notifications
+            notifications: notifications.filter(item => item === newItem)
         }, () => updateUser())
 
     }

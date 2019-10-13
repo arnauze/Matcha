@@ -43,12 +43,21 @@ class MainPart extends React.Component {
 
     }
 
+    reloadChat = () => {
+
+        let action = {
+            type: 'RELOAD_CHAT'
+        }
+        this.props.dispatch(action)
+
+    }
+
     componentDidMount() {
 
         var user = this.props.user.info
         var updateState = state => this.setState(state)
 
-        startWebsocket(user, updateState, this.state.notifications, this.updateUser)
+        startWebsocket(user, updateState, this.state.notifications, this.updateUser, this.reloadChat)
 
     }
 
@@ -119,8 +128,10 @@ class MainPart extends React.Component {
 
     onClickNotification = (e) => {
 
+        console.log(e)
+
         this.setState({
-            notifications: this.state.notifications.filter(item => item.timestamp !== e.timestamp)
+            notifications: this.state.notifications.filter(item => item !== e)
         })
 
     }

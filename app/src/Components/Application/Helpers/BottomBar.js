@@ -5,46 +5,55 @@ import IconButton from '@material-ui/core/IconButton'
 import Menu from '@material-ui/core/Menu'
 import NotificationsIcon from '@material-ui/icons/Notifications'
 import NotificationItem from './NotificationItem'
-import { sendNotification } from '../../../Functions/Functions'
+import { API } from 'aws-amplify'
+import { connect } from 'react-redux'
 
-const connections = [
-    'arnauze',
-    'arnauze',
-    'arnauze',
-    'arnauze',
-    'arnauze',
-    'arnauze',
-    'arnauze'
-]
-
-export default class BottomBar extends React.Component {
+class BottomBar extends React.Component {
 
     state = {
-        open: false
+        open: false,
+        notifications: []
     }
 
     onClick = (e) => {
-       
+
         this.anchorEl = e.currentTarget
         
-        this.setState({
-            ...this.state,
-            open: true
+        let apiName = 'Matcha'
+        let path = '/users/' + this.props.user.info.username
+        let myInit = {}
+
+        API.get(apiName, path, myInit)
+        .then(data => {
+
+            this.setState({
+                ...this.state,
+                notifications: data.notifications.sort((a, b) => { return b.timestamp - a.timestamp }),
+                open: true
+            })
+
         })
-
-        let path = "sendMessage"
-        let data = {
-            "to": "maxence",
-            "message": "YO COMMENT TU VAS"
-        }
-
-        sendNotification(path, data)
+        .catch(err => {
+            console.log(err)
+        })
 
     }
 
     onClose = () => {
 
         this.anchorEl = null
+
+        let apiName = 'Matcha'
+        let path = '/users/' + this.props.user.info.username + '/notifications/see'
+        let myInit = {}
+
+        API.post(apiName, path, myInit)
+        .then(data => {
+            console.log(data)
+        })
+        .catch(err => {
+            console.log(err)
+        })
 
         this.setState({
             ...this.state,
@@ -90,15 +99,20 @@ export default class BottomBar extends React.Component {
                     },
                 }}
                 >
-                    <div style={{display: 'flex', flexDirection: 'column'}}>
+                    <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                         {
-                            connections.map((item, index) => (
-                                <NotificationItem
-                                key={index}
-                                notification={item}
-                                />
+                            this.state.notifications.length > 0
+                            ?
+                                this.state.notifications.map((item, index) => (
+                                    
+                                    <NotificationItem
+                                    key={index}
+                                    notification={item}
+                                    />
 
-                            ))
+                                ))
+                            :
+                                "You don't have any notifications"
                         }
                     </div>
                 </Menu>
@@ -109,3 +123,5 @@ export default class BottomBar extends React.Component {
     }
 
 }
+
+export default connect(state => { return { user: state.user } } )(BottomBar)
