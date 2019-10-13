@@ -16,6 +16,15 @@ class Browsing extends React.Component {
 
     }
 
+    changePage = page => {
+
+        this.setState({
+            ...this.state,
+            page: page
+        })
+
+    }
+
     getMatches = () => {
 
         let apiName = 'Matcha'
@@ -52,15 +61,6 @@ class Browsing extends React.Component {
             console.log("Error fetching the matches")
             console.log(error)
 
-        })
-
-    }
-
-    changePage = page => {
-
-        this.setState({
-            ...this.state,
-            page: page
         })
 
     }
@@ -330,9 +330,11 @@ class Browsing extends React.Component {
                         minFameRating={this.state.filters.fameRating}
                         onFilterClick={this.getFilteredMatches}
                         onResetClick={this.onResetClick}
-                        changePage={this.changePage}
                         onDeleteClick={this.onDeleteClick}
                         onLikeClick={this.onLikeClick}
+                        addNotification={this.props.addNotification}
+                        changePage={this.props.changePage}
+                        change={this.changePage}
                         />
 
                     )
@@ -355,9 +357,11 @@ class Browsing extends React.Component {
                         minFameRating={this.state.filters.fameRating}
                         onFilterClick={this.getFilteredMatches}
                         onResetClick={this.onResetClick}
-                        changePage={this.changePage}
                         onDeleteClick={this.onDeleteClick}
                         onLikeClick={this.onLikeClick}
+                        addNotification={this.props.addNotification}
+                        changePage={this.props.changePage}
+                        change={this.changePage}
                         />
                     )
                 }
@@ -381,9 +385,11 @@ class Browsing extends React.Component {
                     minFameRating={this.state.filters.fameRating}
                     onFilterClick={this.getFilteredMatches}
                     onResetClick={this.onResetClick}
-                    changePage={this.changePage}
                     onDeleteClick={this.onDeleteClick}
                     onLikeClick={this.onLikeClick}
+                    addNotification={this.props.addNotification}
+                    changePage={this.props.changePage}
+                    change={this.changePage}
                     />
                 )
     

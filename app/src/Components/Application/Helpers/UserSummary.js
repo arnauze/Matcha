@@ -41,6 +41,34 @@ class UserSummary extends React.Component {
 
     }
 
+    navigateToFriendProfile = username => {
+
+        let apiName = 'Matcha'
+        let path = '/users/' + this.props.connectedUser.info.username + '/visit/' + this.props.user.username
+        let myInit = {}
+
+        API.post(apiName, path, myInit)
+        .then(data => {
+
+            console.log("Success!")
+            console.log(data)
+
+        })
+        .catch(err => {
+
+            console.log("Error visiting the user")
+            console.log(err)
+
+        })
+
+        let page = {
+            text: 'FRIEND_PROFILE',
+            var: {username: username}
+        }
+        this.props.changePage(page)
+
+    }
+
     render() {
 
         var user = this.props.user
@@ -51,7 +79,7 @@ class UserSummary extends React.Component {
                 <div style={{backgroundColor: 'white', border: '0.5px solid black', margin: 10, width: '6vw', height: '12vh', borderRadius: 120}}>
                 </div>
                 <div style={{display: 'flex'}}>
-                    <Button>
+                    <Button onClick={() => this.navigateToFriendProfile(user.username)}>
                         <b style={{fontSize: '1vw', fontWeight: '500', margin: 5, marginRight: 10}}>{user.full_name}</b>
                     </Button>
                     <b style={{fontWeight: '100', fontSize: '0.7vw', color: 'red'}}>{this.renderFameRating(user)}</b>

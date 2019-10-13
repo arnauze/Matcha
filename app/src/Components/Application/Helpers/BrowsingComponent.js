@@ -19,12 +19,12 @@ class BrowsingComponent extends React.Component {
             this.setState({
                 ...this.state,
                 page: 1
-            }, () => this.props.changePage(this.state.page))
+            }, () => this.props.change(this.state.page))
         } else {
             this.setState({
                 ...this.state,
                 page: this.state.page + 1
-            }, () => this.props.changePage(this.state.page))
+            }, () => this.props.change(this.state.page))
         }
 
     }
@@ -35,12 +35,12 @@ class BrowsingComponent extends React.Component {
             this.setState({
                 ...this.state,
                 page: this.props.total
-            }, () => this.props.changePage(this.state.page))
+            }, () => this.props.change(this.state.page))
         } else {
             this.setState({
                 ...this.state,
                 page: this.state.page - 1
-            }, () => this.props.changePage(this.state.page))
+            }, () => this.props.change(this.state.page))
         }
 
     }
@@ -94,6 +94,8 @@ class BrowsingComponent extends React.Component {
                         user={user}
                         onLikeClick={this.onLikeClick}
                         onDeleteClick={this.onDeleteClick}
+                        addNotification={this.props.addNotification}
+                        changePage={this.props.changePage}
                         />
                         <div style={{width: '10vw', height: '60vh', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
                             <Button

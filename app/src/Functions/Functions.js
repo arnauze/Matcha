@@ -12,7 +12,7 @@ export function sendNotification(action, data) {
 
 }
 
-export function startWebsocket(user, updateState, notifications) {
+export function startWebsocket(user, updateState, notifications, updateUser) {
 
     var ws = new WebSocket('wss://30gbtaal39.execute-api.us-east-2.amazonaws.com/dev')
 
@@ -35,11 +35,30 @@ export function startWebsocket(user, updateState, notifications) {
         console.log("NEW MESSAGE:")
         console.log(event)
 
-        notifications.push({data: event.data, timestamp: Date.now()})
+        var body = JSON.parse(event.data)
+        var message
+
+        switch(body.type) {
+
+            case 'connection':
+                if (body.data === 'delete') {
+                    message = 'You lost a connection with ' + body.from + '!'
+                } else {
+                    message = 'You got a new a connection with ' + body.from + '!'
+                }
+                break;
+            default:
+                message = "Error"
+
+        }
+
+        notifications.push({data: message, timestamp: body.timestamp})
+
+
 
         updateState({
             notifications: notifications
-        })
+        }, () => updateUser())
 
     }
 

@@ -10,7 +10,10 @@ class Pages extends React.Component {
         super(props)
 
         this.state = {
-            page: props.isFirstConnection ? 'PROFILE' : 'BROWSING'
+            page: {
+                text: props.isFirstConnection ? 'PROFILE' : 'BROWSING',
+                var: {}
+            }
         }
 
     }
@@ -23,7 +26,10 @@ class Pages extends React.Component {
 
             this.setState({
                 ...this.state,
-                page: page
+                page: {
+                    text: page.text,
+                    var: page.var
+                }
             })
 
         } else {

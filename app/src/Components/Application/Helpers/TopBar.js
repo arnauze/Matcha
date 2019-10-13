@@ -6,6 +6,7 @@ import SearchIcon from '@material-ui/icons/Search'
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew'
 import HomeIcon from '@material-ui/icons/Home'
 import PersonIcon from '@material-ui/icons/Person'
+import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline'
 import { Auth, API } from 'aws-amplify'
 import { connect } from 'react-redux'
 
@@ -69,13 +70,16 @@ class TopBar extends React.Component {
 
             <AppBar position="fixed" color="primary">
                 <Toolbar style={{justifyContent: 'space-evenly'}}>
-                    <IconButton onClick={() => this.props.changePage('BROWSING')}>
+                    <IconButton onClick={() => this.props.changePage({text: 'BROWSING', var: {}})}>
                         <HomeIcon style={{fontSize: 30}}/>
                     </IconButton>
-                    <IconButton onClick={() => this.props.changePage('SEARCH')}>
+                    <IconButton onClick={() => this.props.changePage({text: 'SEARCH', var: {}})}>
                         <SearchIcon style={{fontSize: 30}}/>
                     </IconButton>
-                    <IconButton onClick={() => this.props.changePage('PROFILE')}>
+                    <IconButton onClick={() => this.props.changePage({text: 'CHAT', var: {}})}>
+                        <ChatBubbleOutlineIcon style={{fontSize: 26}}/>
+                    </IconButton>
+                    <IconButton onClick={() => this.props.changePage({text: 'PROFILE', var: {}})}>
                         <PersonIcon  style={{fontSize: 30}}/>
                     </IconButton>
                     <IconButton onClick={() => this.onSignOut()}>

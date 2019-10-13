@@ -400,6 +400,8 @@ class Search extends React.Component {
                                 user={item}
                                 reload={this.getMatches}
                                 onDeleteClick={this.onDeleteClick}
+                                addNotification={this.props.addNotification}
+                                changePage={this.props.changePage}
                                 />
                             </ListItem>
 
