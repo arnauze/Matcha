@@ -2,6 +2,7 @@ import React from 'react'
 import Button from '@material-ui/core/Button'
 import SignIn from './SignIn'
 import SignUp from './SignUp'
+import ForgotPassword from './ForgotPassword'
 
 export default class Connection extends React.Component {
 
@@ -67,6 +68,16 @@ export default class Connection extends React.Component {
             return (
 
                 <SignUp
+                changePage={this.onClick}
+                />
+
+            )
+
+        } else if (this.state.page === 'FORGOT_PASSWORD') {
+            
+            return (
+
+                <ForgotPassword
                 changePage={this.onClick}
                 />
 

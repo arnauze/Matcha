@@ -6,6 +6,7 @@ import SearchIcon from '@material-ui/icons/Search'
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew'
 import HomeIcon from '@material-ui/icons/Home'
 import PersonIcon from '@material-ui/icons/Person'
+import MapIcon from '@material-ui/icons/Map'
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline'
 import { Auth, API } from 'aws-amplify'
 import { connect } from 'react-redux'
@@ -79,6 +80,9 @@ class TopBar extends React.Component {
                     </IconButton>
                     <IconButton onClick={() => this.props.changePage({text: 'SEARCH', var: {}})}>
                         <SearchIcon style={{fontSize: 30}}/>
+                    </IconButton>
+                    <IconButton onClick={() => this.props.changePage({text: 'MAP', var: {}})}>
+                        <MapIcon style={{fontSize: 30}}/>
                     </IconButton>
                     <IconButton onClick={() => this.props.changePage({text: 'CHAT', var: {}})}>
                         <ChatBubbleOutlineIcon style={{fontSize: 26}}/>

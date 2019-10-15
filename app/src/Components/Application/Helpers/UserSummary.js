@@ -76,8 +76,11 @@ class UserSummary extends React.Component {
         return (
 
             <div style={{width: '50vw', minHeight: '60vh', backgroundColor: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', border: '0.5px solid black', borderRadius: 10, justifyContent: 'center', position: 'relative'}}>
-                <div style={{backgroundColor: 'white', border: '0.5px solid black', margin: 10, width: '6vw', height: '12vh', borderRadius: 120}}>
-                </div>
+                <img
+                style={{backgroundColor: 'white', border: '1px solid black', margin: 10, width: '6vw', height: '12vh', borderRadius: 120}}
+                src={user.profile_picture}
+                alt=""
+                />
                 <div style={{display: 'flex'}}>
                     <Button onClick={() => this.navigateToFriendProfile(user.username)}>
                         <b style={{fontSize: '1vw', fontWeight: '500', margin: 5, marginRight: 10}}>{user.full_name}</b>
@@ -99,8 +102,13 @@ class UserSummary extends React.Component {
                 </div>
                 <div style={{maxWidth: '30vw', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                     <div style={{display: 'flex'}}>
-                        <div style={{border: '0.5px solid lightgray', margin: 5, width: '17vw', height: '17vh'}}/>
-                        <div style={{border: '0.5px solid lightgray', margin: 5, width: '17vw', height: '17vh'}}/>
+                        {
+                            user.medias ? user.medias.map((item, index) => {
+                                return (
+                                    <img alt="" src={item} key={index} style={{border: '1px solid lightgray', margin: 5, width: '12vw', height: '14vh'}}/>
+                                )
+                            }) : null
+                        }
                     </div>
                 </div>
                 <div style={{display: 'flex', width: '20vw', justifyContent: 'space-between', position: 'absolute', bottom: 0}}>

@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { API } from 'aws-amplify'
 import BrowsingComponent from '../Helpers/BrowsingComponent'
+import { distance } from '../../../Functions/Functions'
 
 class Browsing extends React.Component {
 
@@ -180,6 +181,10 @@ class Browsing extends React.Component {
                 return b.fame_rating - a.fame_rating
             })
 
+        } else if (text === 'distance') {
+            newMatches = newMatches.sort((a, b) => {
+                return distance(a.userLocation.lat, a.userLocation.lng, this.props.user.info.userLocation.lat, this.props.user.info.userLocation.lng) - distance(b.userLocation.lat, b.userLocation.lng, this.props.user.info.userLocation.lat, this.props.user.info.userLocation.lng)
+            })
         }
 
         if (this.state.filters.activated) {

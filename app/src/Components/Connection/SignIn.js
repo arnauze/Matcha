@@ -123,7 +123,7 @@ class SignIn extends React.Component {
 
         return (
 
-            <div style={{width: '100%', height: '100vh', backgroundColor: 'red', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+            <div style={{width: '98vw', height: '98vh', backgroundColor: 'red', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
                 <div style={{backgroundColor: 'white', border: '0.5px black solid', borderRadius: 5}}>
                     <div style={{margin: 20, display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                         <form
@@ -142,6 +142,13 @@ class SignIn extends React.Component {
                             <br />
                             <input type="submit" value="Sign in"/>
                         </form>
+                        <Button
+                        onClick={() => this.props.changePage('FORGOT_PASSWORD')}
+                        style={{color: 'blue', margin: 5}}
+                        size="small"
+                        >
+                            Forgot your password ?
+                        </Button>
                         <Button
                         style={{color: 'blue', marginTop: 5}}
                         size="small"

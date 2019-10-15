@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button'
 import ImageUploader from 'react-images-upload'
 import { API } from 'aws-amplify'
 import { connect } from 'react-redux'
+import { fromGeolocationToAddress } from '../../../Functions/Functions'
 
 class FirstConnection extends React.Component {
 
@@ -16,7 +17,60 @@ class FirstConnection extends React.Component {
         gender: '',
         enabled: false,
         page: 'FIRST',
-        age: -1
+        age: -1,
+        location: {},
+        profilePicture: ''
+    }
+
+    _getElementText(response, elementName) {
+        return response.getElementsByTagName(elementName)[0].innerHTML;
+    }
+
+    async componentDidMount() {
+    
+        // Here I try to get the user's location
+
+        navigator.geolocation.getCurrentPosition(async (position) => {
+
+            console.log("GOT CURRENT POSITION")
+            console.log(position)
+
+            let address = await fromGeolocationToAddress(position.coords.latitude, position.coords.longitude)
+
+            this.setState({
+                ...this.state,
+                location: {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude,
+                    address: address.results[0].formatted_address
+                }
+            })
+    
+        }, async (err) => {
+    
+            console.log("ERROR GETTING POSITION")
+            console.log(err)
+    
+            fetch("http://api.hostip.info")
+            .then(response => {
+                return response.text();
+            }).then(xml => {
+                return (new window.DOMParser()).parseFromString(xml, "text/xml")
+            }).then(data => {
+                var coordinates = this._getElementText(data , "gml:coordinates").split(',')
+                let address = fromGeolocationToAddress(coordinates[0], coordinates[1])
+                this.setState({
+                    ...this.state,
+                    location: {
+                        lat: coordinates[0],
+                        lng: coordinates[1],
+                        address: address.results[0].formatted_address
+                    }
+                })
+            })
+    
+        })
+
     }
 
     checkIfEnabled = () => {
@@ -117,7 +171,9 @@ class FirstConnection extends React.Component {
                 bio: this.state.bio,
                 pickedTags: this.state.pickedTags,
                 pickedImages: this.state.pickedImages,
-                age: this.state.age
+                age: this.state.age,
+                userLocation: this.state.location,
+                profilePicture: this.state.profilePicture
             }
         }
 
@@ -134,6 +190,7 @@ class FirstConnection extends React.Component {
                 }
             }
             this.props.dispatch(action)
+            this.props.update()
 
         })
         .catch(error => {
@@ -153,6 +210,8 @@ class FirstConnection extends React.Component {
 
     onPickImage = (file, path) => {
 
+        console.log(path[0])
+
         var array = []
         var i = 0
 
@@ -168,6 +227,9 @@ class FirstConnection extends React.Component {
     }
 
     render() {
+
+        console.log("State here", this.state)
+        console.log("Props here", this.props)
 
         if (this.state.page === 'FIRST') {
 
@@ -256,8 +318,6 @@ class FirstConnection extends React.Component {
 
         } else {
 
-            console.log(this.state)
-
             return (
 
                 <div style={{margin: 10, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '98vw', marginTop: '25vh'}}>
@@ -276,8 +336,8 @@ class FirstConnection extends React.Component {
                         {
                             this.state.pickedImages.map((item, index) => (
 
-                                <div style={{width: 400, height: 300, margin: 5, display: 'flex', alignItems: 'center', justifyContent: 'center', border: '0.5px solid gray', borderRadius: 5}} key={index}>
-                                    <img src={item} alt={index.toString()} style={{maxWidth: 400, maxHeight: 300}}/>
+                                <div style={{width: 400, height: 300, margin: 5, display: 'flex', alignItems: 'center', justifyContent: 'center', border: this.state.profilePicture === item ? '1px blue solid' : '0.5px lightgray solid', borderRadius: 5}} key={index}>
+                                    <img onClick={() => this.setState({...this.state, profilePicture: item})} src={item} alt={index.toString()} style={{maxWidth: 400, maxHeight: 300}}/>
                                 </div>
 
                             ))

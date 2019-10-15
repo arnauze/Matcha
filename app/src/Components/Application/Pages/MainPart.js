@@ -3,7 +3,9 @@ import Browsing from './Browsing'
 import Profile from './Profile'
 import Search from './Search'
 import Chat from './Chat'
+import Map from './Map'
 import EditProfile from '../Helpers/EditProfile'
+import UserList from '../Helpers/UserList'
 import { connect } from 'react-redux'
 import { startWebsocket } from '../../../Functions/Functions'
 import IconButton from '@material-ui/core/IconButton'
@@ -14,6 +16,15 @@ class MainPart extends React.Component {
 
     state = {
         notifications: []
+    }
+
+    componentDidMount() {
+
+        var user = this.props.user.info
+        var updateState = state => this.setState(state)
+
+        startWebsocket(user, updateState, this.state.notifications, this.updateUser, this.reloadChat)
+
     }
 
     updateUser = () => {
@@ -49,15 +60,6 @@ class MainPart extends React.Component {
             type: 'RELOAD_CHAT'
         }
         this.props.dispatch(action)
-
-    }
-
-    componentDidMount() {
-
-        var user = this.props.user.info
-        var updateState = state => this.setState(state)
-
-        startWebsocket(user, updateState, this.state.notifications, this.updateUser, this.reloadChat)
 
     }
 
@@ -106,6 +108,22 @@ class MainPart extends React.Component {
             case 'CHAT':
                 return (
                     <Chat />
+                )
+
+            case 'MAP':
+                return (
+                    <Map />
+                )
+
+            case 'USER_LIST':
+                return (
+                    <UserList
+                    type={this.props.page.var.type}
+                    users={this.props.page.var.users}
+                    theKey={this.props.page.var.key}
+                    pageName={this.props.page.var.pageName}
+                    changePage={this.props.changePage}
+                    />
                 )
             
             default:

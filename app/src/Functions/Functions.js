@@ -1,3 +1,5 @@
+import { apiKey } from '../Constants/Constants'
+
 export function sendNotification(action, data) {
 
     var ws = new WebSocket('wss://30gbtaal39.execute-api.us-east-2.amazonaws.com/dev')
@@ -70,4 +72,28 @@ export function startWebsocket(user, updateState, notifications, updateUser, rel
 
     }
 
+}
+
+export function fromGeolocationToAddress(lat, lng) {
+    const url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lng + '&key=' + apiKey
+    return fetch(url).then((response) => response.json())
+}
+
+export function distance(lat1,lon1,lat2,lon2) {
+	var R = 6371; 
+	var dLat = (lat2-lat1) * Math.PI / 180;
+	var dLon = (lon2-lon1) * Math.PI / 180;
+	var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+		Math.cos(lat1 * Math.PI / 180 ) * Math.cos(lat2 * Math.PI / 180 ) *
+		Math.sin(dLon/2) * Math.sin(dLon/2);
+	var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+	var d = R * c;
+	if (d>1) {
+        console.log(Math.round(d))
+        return Math.round(d);
+    } else if (d<=1) {
+        console.log(Math.round(d*1000))
+        return Math.round(d*1000);
+    }
+	return d;
 }
