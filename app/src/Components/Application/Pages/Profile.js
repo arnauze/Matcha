@@ -72,6 +72,31 @@ class Profile extends React.Component {
 
     }
 
+    onClickLike = () => {
+
+        let apiName = 'Matcha'
+        let path = '/users/' + this.props.user.info.username + '/like/' + this.state.user.username
+        let myInit = {}
+
+        API.post(apiName, path, myInit)
+        .then(data => {
+            console.log("Success liking the user")
+            console.log(data)
+            let action = {
+                type: "UPDATE_USER",
+                value: {
+                    user: data
+                }
+            }
+            this.props.dispatch(action)
+        })
+        .catch(err => {
+            console.log("Error liking the user")
+            console.log(err)
+        })
+
+    }
+
     renderFameRating = () => {
 
         if (this.state.user.fame_rating >= 0) {
@@ -109,7 +134,22 @@ class Profile extends React.Component {
                 return (
 
                     <div style={{width: '98vw', display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 10}}>
-                        <div style={{width: '50vw', backgroundColor: 'lightgray', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                        <div style={{width: '50vw', backgroundColor: 'lightgray', display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'absolute'}}>
+                        {
+                            this.props.isFriendProfile
+                            ?
+                                <div style={{display: 'flex', flexDirection: 'column', position: 'absolute', left: 5, top: 5, alignItems: 'center', justifyContent: 'center', width: '20vw', height: '10vh'}}>
+                                    <Button
+                                    onClick={this.onClickLike}
+                                    variant="contained"
+                                    color={this.props.user.info.likes.indexOf(this.state.user.username) >= 0 ? "secondary" : "primary"}
+                                    >
+                                        {this.props.user.info.likes.indexOf(this.state.user.username) >= 0 ? "Dislike" : "Like"}
+                                    </Button>
+                                </div>
+                            :
+                                null
+                        }
                             <img
                             src={this.state.user.profile_picture}
                             alt=""
@@ -119,13 +159,12 @@ class Profile extends React.Component {
                                 <b style={{fontSize: 22, fontWeight: '500', margin: 5, marginRight: 10}}>{this.state.user.full_name}</b>
                                 <b style={{fontWeight: '100', fontSize: 19, color: 'red'}}>{this.renderFameRating()}</b>
                             </div>
+                            {this.props.isFriendProfile ? <b style={{color: 'blue'}}>{this.props.user.info.userLikes.indexOf(this.state.user.username) >= 0 ? "Likes you" : "Does not like you"}</b> : null}
                             <b style={{margin: 5}}>{this.state.user.age} years old</b>
                             <p>{this.state.user.bio}</p>
                             <b style={{color: 'blue'}}>{this.state.user.userLocation.address.split(',')[1].substr(1)}</b>
-                            <p>
-                                <b>{this.state.user.gender} looking for {this.state.user.sexual_preferences}</b>
-                            </p>
-                            <div style={{width: '30vw', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly'}}>
+                            <p><b>{this.state.user.gender} looking for {this.state.user.sexual_preferences}</b></p>
+                            <div style={{width: '50vw', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly'}}>
                                 {
                                     this.state.user.interests.map((item, index) => (
                                         <div key={index}>
@@ -175,12 +214,7 @@ class Profile extends React.Component {
                                     null
                                 :
                                     <React.Fragment>
-                                        <Button
-                                        onClick={() => this.props.changePage({text: 'EDIT_PROFILE', var: {}})}
-                                        >
-                                            Edit informations
-                                        </Button>
-                                        <div style={{display: 'flex', alignItems: 'center'}}>
+                                        <div style={{display: 'flex', alignItems: 'center', margin: 10, width: '50vw', justifyContent: 'space-around'}}>
                                             <Button
                                             onClick={() => this.props.changePage({text: 'USER_LIST', var: { type: '/like', users: this.state.user.likes, key: "likes", pageName: "Who you like" }})}
                                             variant="contained"
@@ -214,6 +248,11 @@ class Profile extends React.Component {
                                                 Visit historic
                                             </Button>
                                         </div>
+                                        <Button
+                                        onClick={() => this.props.changePage({text: 'EDIT_PROFILE', var: {}})}
+                                        >
+                                            Edit informations
+                                        </Button>
                                     </React.Fragment>
                             }
                         </div>

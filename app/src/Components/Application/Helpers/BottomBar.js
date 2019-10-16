@@ -11,30 +11,31 @@ import { connect } from 'react-redux'
 class BottomBar extends React.Component {
 
     state = {
-        open: false,
-        notifications: []
+        open: false
+    }
+
+    getUnreadNotifications = () => {
+
+        var i = 0
+        var index = 0
+        while (index < this.props.user.info.notifications.length) {
+            if (!this.props.user.info.notifications[index].seen) {
+                i++;
+            }
+            index++
+        }
+
+        return i
+
     }
 
     onClick = (e) => {
 
         this.anchorEl = e.currentTarget
         
-        let apiName = 'Matcha'
-        let path = '/users/' + this.props.user.info.username
-        let myInit = {}
-
-        API.get(apiName, path, myInit)
-        .then(data => {
-
-            this.setState({
-                ...this.state,
-                notifications: data.notifications.sort((a, b) => { return b.timestamp - a.timestamp }),
-                open: true
-            })
-
-        })
-        .catch(err => {
-            console.log(err)
+        this.setState({
+            ...this.state,
+            open: true
         })
 
     }
@@ -50,6 +51,15 @@ class BottomBar extends React.Component {
         API.post(apiName, path, myInit)
         .then(data => {
             console.log(data)
+
+            let action = {
+                type: 'UPDATE_USER',
+                value: {
+                    user: data
+                }
+            }
+            this.props.dispatch(action)
+
         })
         .catch(err => {
             console.log(err)
@@ -62,13 +72,9 @@ class BottomBar extends React.Component {
 
     }
 
-    onClickItem = (item) => {
-
-        console.log(item)
-
-    }
-
     render() {
+
+        console.log(this.state)
 
         return (
             <div>
@@ -80,6 +86,7 @@ class BottomBar extends React.Component {
                         onClick={(e) => this.onClick(e)}
                         >
                             <NotificationsIcon />
+                            <b style={{fontWeight: 'normal', fontSize: 12, top: 10}}>{this.getUnreadNotifications()}</b>
                         </IconButton>
                     </Toolbar>
                 </AppBar>
@@ -101,9 +108,9 @@ class BottomBar extends React.Component {
                 >
                     <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                         {
-                            this.state.notifications.length > 0
+                            this.props.user.info.notifications.length > 0
                             ?
-                                this.state.notifications.map((item, index) => (
+                                this.props.user.info.notifications.sort((a, b) => {return b.timestamp - a.timestamp}).map((item, index) => (
                                     
                                     <NotificationItem
                                     key={index}

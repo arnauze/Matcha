@@ -102,7 +102,9 @@ class MainPart extends React.Component {
 
             case 'EDIT_PROFILE':
                 return (
-                    <EditProfile />
+                    <EditProfile
+                    changePage={this.props.changePage}
+                    />
                 )
             
             case 'CHAT':
@@ -112,7 +114,9 @@ class MainPart extends React.Component {
 
             case 'MAP':
                 return (
-                    <Map />
+                    <Map
+                    changePage={this.props.changePage}
+                    />
                 )
 
             case 'USER_LIST':

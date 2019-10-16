@@ -16,7 +16,7 @@ export default class InterestTag extends React.Component {
     render() {
 
         return (
-            <div style={{margin: 5}}>
+            <div style={{margin: 7}}>
                 <Fab
                 variant="extended"
                 size="small"

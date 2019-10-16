@@ -2,8 +2,36 @@ import React from 'react'
 import { Map as GMap, Marker, GoogleApiWrapper } from 'google-maps-react'
 import { connect } from 'react-redux'
 import { apiKey } from '../../../Constants/Constants'
+import { API } from 'aws-amplify'
 
 class Map extends React.Component {
+
+    state = {
+        loading: true
+    }
+
+    componentDidMount() {
+
+        let apiName = 'Matcha'
+        let path = '/users'
+        let myInit = {}
+
+        API.get(apiName, path, myInit)
+        .then(data => {
+            console.log("Success fetching the users")
+            console.log(data)
+            this.setState({
+                ...this.state,
+                loading: false,
+                users: data.Items
+            })
+        })
+        .catch(err => {
+            console.log("Error fetching the users")
+            console.log(err)
+        })
+
+    }
 
     render() {
 
@@ -17,10 +45,22 @@ class Map extends React.Component {
                 center={{lat: user.userLocation.lat, lng: user.userLocation.lng}}
                 zoom={13}
                 >
-                    <Marker
-                    title={'The marker`s title will appear as a tooltip.'}
-                    position={{lat: user.userLocation.lat, lng: user.userLocation.lng}}
-                    />
+                    {
+                        this.state.loading
+                        ?
+                            null
+                        :
+                            this.state.users.map((item, index) => {
+                                return (
+                                    <Marker
+                                    onClick={() => item.username !== this.props.user.info.username ? this.props.changePage({text: "FRIEND_PROFILE", var: {username: item.username}}) : null}
+                                    key={index}
+                                    title={item.full_name}
+                                    position={{lat: item.userLocation.lat, lng: item.userLocation.lng}}
+                                    />
+                                )
+                            })    
+                    }
                 </GMap>
             </div>
 
