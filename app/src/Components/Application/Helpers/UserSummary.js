@@ -104,9 +104,11 @@ class UserSummary extends React.Component {
                     <div style={{display: 'flex'}}>
                         {
                             user.medias ? user.medias.map((item, index) => {
-                                return (
-                                    <img alt="" src={item} key={index} style={{border: '1px solid lightgray', margin: 5, width: '12vw', height: '14vh'}}/>
-                                )
+                                if (index < 3) {
+                                    return (
+                                        <img alt="" src={item} key={index} style={{border: '1px solid lightgray', margin: 5, width: '12vw', height: '14vh'}}/>
+                                    )
+                                }
                             }) : null
                         }
                     </div>

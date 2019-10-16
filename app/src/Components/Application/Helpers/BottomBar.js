@@ -30,8 +30,6 @@ class BottomBar extends React.Component {
     }
 
     onClick = (e) => {
-
-        this.anchorEl = e.currentTarget
         
         this.setState({
             ...this.state,
@@ -41,8 +39,6 @@ class BottomBar extends React.Component {
     }
 
     onClose = () => {
-
-        this.anchorEl = null
 
         let apiName = 'Matcha'
         let path = '/users/' + this.props.user.info.username + '/notifications/see'
@@ -83,6 +79,7 @@ class BottomBar extends React.Component {
                     style={{display: 'flex', justifyContent: 'center'}}
                     >
                         <IconButton
+                        id="b"
                         onClick={(e) => this.onClick(e)}
                         >
                             <NotificationsIcon />
@@ -92,7 +89,7 @@ class BottomBar extends React.Component {
                 </AppBar>
                 <Menu
                 id="long-menu"
-                anchorEl={this.anchorEl}
+                anchorEl={document.getElementById("b")}
                 open={this.state.open}
                 onClose={() => this.onClose()}
                 transformOrigin={{
@@ -101,8 +98,7 @@ class BottomBar extends React.Component {
                 }}
                 PaperProps={{
                     style: {
-                        maxHeight: '30vh',
-                        width: '20vw'
+                        width: '40vw'
                     },
                 }}
                 >

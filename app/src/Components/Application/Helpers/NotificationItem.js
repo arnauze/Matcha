@@ -8,6 +8,8 @@ export default class NotificationItem extends React.Component {
 
             case 'new_connection':
                 return 'You have a new connection with ' + this.props.notification.withUser
+            case 'lost_connection':
+                return this.props.notification.withUser + ' disliked you...'
             case 'new_like':
                 return this.props.notification.withUser + ' liked you'
             case 'new_message':

@@ -15,23 +15,7 @@ class Profile extends React.Component {
 
         if (this.props.isFriendProfile) {
 
-            let apiName = 'Matcha'
-            let path = '/users/' + this.props.username
-            let myInit = {}
-
-            API.get(apiName, path, myInit)
-            .then(data => {
-
-                this.setState({
-                    ...this.state,
-                    loading: false,
-                    user: data
-                })
-
-            })
-            .catch(err => {
-                console.log(err)
-            })
+            this.getFriendUser()
 
         } else {
 
@@ -42,6 +26,28 @@ class Profile extends React.Component {
             })
 
         }
+
+    }
+
+    getFriendUser = () => {
+
+        let apiName = 'Matcha'
+        let path = '/users/' + this.props.username
+        let myInit = {}
+
+        API.get(apiName, path, myInit)
+        .then(data => {
+
+            this.setState({
+                ...this.state,
+                loading: false,
+                user: data
+            })
+
+        })
+        .catch(err => {
+            console.log(err)
+        })
 
     }
 
@@ -89,6 +95,7 @@ class Profile extends React.Component {
                 }
             }
             this.props.dispatch(action)
+            this.getFriendUser()
         })
         .catch(err => {
             console.log("Error liking the user")
@@ -142,9 +149,9 @@ class Profile extends React.Component {
                                     <Button
                                     onClick={this.onClickLike}
                                     variant="contained"
-                                    color={this.props.user.info.likes.indexOf(this.state.user.username) >= 0 ? "secondary" : "primary"}
+                                    color={this.state.user.userLikes.indexOf(this.props.user.info.username) >= 0 ? "secondary" : "primary"}
                                     >
-                                        {this.props.user.info.likes.indexOf(this.state.user.username) >= 0 ? "Dislike" : "Like"}
+                                        {this.state.user.userLikes.indexOf(this.props.user.info.username) >= 0 ? "Dislike" : "Like"}
                                     </Button>
                                 </div>
                             :
