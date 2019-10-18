@@ -29,7 +29,24 @@ class FirstConnection extends React.Component {
     async componentDidMount() {
     
         // Here I try to get the user's location
-
+        fetch("http://api.hostip.info")
+        .then(response => {
+            return response.text();
+        }).then(xml => {
+            return (new window.DOMParser()).parseFromString(xml, "text/xml")
+        }).then(async data => {
+            var coordinates = this._getElementText(data , "gml:coordinates").split(',')
+            console.log(coordinates)
+            let address = await fromGeolocationToAddress(coordinates[1], coordinates[0])
+            console.log(address)
+            this.setState({
+                ...this.state,
+                location: {
+                    lat: coordinates[0],
+                    lng: coordinates[1],
+                    address: address.results[0].formatted_address
+                }
+            })
         navigator.geolocation.getCurrentPosition(async (position) => {
 
             console.log("GOT CURRENT POSITION")
@@ -51,22 +68,7 @@ class FirstConnection extends React.Component {
             console.log("ERROR GETTING POSITION")
             console.log(err)
     
-            fetch("http://api.hostip.info")
-            .then(response => {
-                return response.text();
-            }).then(xml => {
-                return (new window.DOMParser()).parseFromString(xml, "text/xml")
-            }).then(data => {
-                var coordinates = this._getElementText(data , "gml:coordinates").split(',')
-                let address = fromGeolocationToAddress(coordinates[0], coordinates[1])
-                this.setState({
-                    ...this.state,
-                    location: {
-                        lat: coordinates[0],
-                        lng: coordinates[1],
-                        address: address.results[0].formatted_address
-                    }
-                })
+            
             })
     
         })
