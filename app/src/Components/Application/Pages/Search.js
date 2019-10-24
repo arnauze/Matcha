@@ -95,16 +95,15 @@ class Search extends React.Component {
 
         } 
 
-        var i = -1
         var c = true
 
-        while (++i < this.state.searchFilters.tags.length) {
+        for (let i = 0; i < this.state.searchFilters.tags.length; i++) {
 
             if (item.interests.findIndex(item => item === this.state.searchFilters.tags[i]) < 0) {
                 c = false
             }
-
         }
+
 
         return (a && b) ? ((a >= b) && c) : c
         
