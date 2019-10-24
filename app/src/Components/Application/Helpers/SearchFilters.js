@@ -9,8 +9,8 @@ export default class SearchFilters extends React.Component {
     render() {
 
         return (
-            <div style={{width: '50vw', height: '15vh', backgroundColor: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 30}}>
-                <div style={{display: 'flex', width: '25vw'}}>
+            <div style={{flex: 6, width: '60vw', height: '15vh', backgroundColor: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 30}}>
+                <div style={{display: 'flex', width: '60vw'}}>
                     <b>Fame rating:</b>
                     <Slider
                     value={this.props.fameRating}
@@ -23,7 +23,7 @@ export default class SearchFilters extends React.Component {
                     getAriaValueText={() => {return this.props.fameRating}}
                     />
                 </div>
-                <div style={{display: 'flex', width: '25vw'}}>
+                <div style={{display: 'flex', width: '60vw'}}>
                     <b>Age range:</b>
                     <Slider
                     value={this.props.age}
@@ -33,9 +33,9 @@ export default class SearchFilters extends React.Component {
                     getAriaValueText={() => {return this.props.age}}
                     />
                 </div>
-                <div style={{display: 'flex', width: '25vw', alignItems: 'center'}}>
+                <div style={{flex: 2, display: 'flex', width: '60vw', alignItems: 'center', position: 'relative'}}>
                     <b style={{marginRight: 20}}>Tags:</b>
-                    <div style={{display: 'flex', overflowX: 'scroll', width: '25vw'}}>
+                    <div style={{display: 'flex', overflowX: 'scroll', width: '60vw'}}>
                         {
                             tags.map((item, index) => (
                                     <InterestTag key={index} tag={item} tags={this.props.pickedTags} onClick={this.props.onClick}/>
@@ -43,7 +43,7 @@ export default class SearchFilters extends React.Component {
                         }
                     </div>
                 </div>
-                <Button variant="contained" style={{margin: 5}} color="primary" onClick={this.props.onSearch}>
+                <Button variant="contained" style={{margin: 5, paddingTop:5}} color="primary" onClick={this.props.onSearch}>
                         Search
                 </Button>
             </div>
