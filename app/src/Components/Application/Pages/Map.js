@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { apiKey } from '../../../Constants/Constants'
 import { API } from 'aws-amplify'
 
+
 class Map extends React.Component {
 
     state = {
@@ -57,6 +58,7 @@ class Map extends React.Component {
                                     key={index}
                                     title={item.full_name}
                                     position={{lat: item.userLocation.lat, lng: item.userLocation.lng}}
+                                    options={{icon: item.username===this.props.user.info.username ? "http://maps.google.com/mapfiles/ms/icons/blue-dot.png" : "http://maps.google.com/mapfiles/ms/icons/pink-dot.png"}}
                                     />
                                 )
                             })    

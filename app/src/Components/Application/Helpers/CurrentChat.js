@@ -49,7 +49,7 @@ class CurrentChat extends React.Component {
 
                 return (
 
-                    <div key={index} style={{minHeight: 40, maxWidth: 200, minWidth: 100, backgroundColor: 'lightblue', borderRadius: 5, display: 'flex', alignItems: 'center', justifyContent: 'center', alignSelf: item.username === this.props.user.info.username ? 'flex-end' : 'flex-start', right: 0, margin: 5}}>
+                    <div key={index} style={{minHeight: 40, maxWidth: 200, minWidth: 100, backgroundColor: item.username ===this.props.user.info.username ? 'lightblue' : 'magenta', borderRadius: 5, display: 'flex', alignItems: 'center', justifyContent: 'center', alignSelf: item.username === this.props.user.info.username ? 'flex-end' : 'flex-start', right: 0, margin: 5}}>
                         <b style={{fontWeight: 'normal', margin: 7}}>{item.text}</b>
                     </div>
 
