@@ -3,6 +3,7 @@ import Button from '@material-ui/core/Button'
 import SignIn from './SignIn'
 import SignUp from './SignUp'
 import ForgotPassword from './ForgotPassword'
+import Sound from 'react-sound'
 
 export default class Connection extends React.Component {
 
@@ -30,10 +31,20 @@ export default class Connection extends React.Component {
         if (this.state.page === 'MAIN_PAGE') {
 
             return (
-
+                
                 <div style={{width: '100%', height: '100vh', backgroundColor: 'red', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
                     <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                         <h4>Welcome to WeshBébé</h4>
+                        <Sound
+      url="http://streaming.tdiradio.com:8000/house.mp3"
+      autoLoad={true}
+      autoPlay={true}
+      
+      onLoading={this.handleSongLoading}
+      onPlaying={this.handleSongPlaying}
+      playStatus={Sound.status.PLAYING}
+      onFinishedPlaying={this.handleSongFinishedPlaying}
+    />
                         <Button
                         variant="contained"
                         style={{width: 125, height: 50, margin: 5}}
