@@ -375,7 +375,7 @@ class Search extends React.Component {
         console.log(this.state)
 
         return (
-            <div style={{display: 'flex', flexDirection:'column', alignItems: 'center', width: '98vw', margin: 15, marginTop: 60, justifyContent:'space-around', flexWrap: 'wrap'}}>
+            <div style={{display: 'flex', flexDirection:'column', alignItems: 'center', width: '98vw', margin: 15, marginTop: 60, justifyContent:'space-around', flexWrap: 'wrap', position:'relative'}}>
                 <SearchFilters
                 fameRating={this.state.searchFilters.fameRating}
                 age={this.state.searchFilters.age}

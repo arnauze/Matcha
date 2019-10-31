@@ -9,7 +9,7 @@ export default class SearchFilters extends React.Component {
     render() {
 
         return (
-            <div style={{flex: 6, width: '60vw', height: '15vh', backgroundColor: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 30}}>
+            <div style={{flex: 6, width: '80vw', height: '15vh', backgroundColor: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 30, position: 'relative'}}>
                 <div style={{display: 'flex', width: '60vw'}}>
                     <b>Fame rating:</b>
                     <Slider
