@@ -76,7 +76,7 @@ class BrowsingComponent extends React.Component {
             
             return (
                 <React.Fragment>
-                    <div style={{alignItems:"center"}}>
+                    <div style={{alignItems:"center", paddingTop:250}}>
                     <h2>We found {this.props.total} matches for you !</h2>
                     </div>
                     <b style={{fontWeight: 'normal', marginBottom: 5, alignSelf:'center'}}>{this.state.page} / {this.props.total}</b>
@@ -130,7 +130,7 @@ class BrowsingComponent extends React.Component {
     render() {
          
         return (
-            <div style={{width: '98vw', height: '90vh', display: 'flex', justifyContent: 'space-around', alignItems: 'center', flexDirection: 'column', position:'relative'}}>
+            <div style={{width: '98vw', height: '90vh', display: 'flex', justifyContent: 'center', alignItems: 'space-around', flexDirection: 'column', position:'relative'}}>
                 <div>
                 {this.outputMatches()}
                 </div>

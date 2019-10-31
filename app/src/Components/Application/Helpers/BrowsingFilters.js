@@ -31,7 +31,7 @@ export default class BrowsingFilters extends React.Component {
 
         return (
 
-            <div style={{flex: 8, width: '50vw', height: '15vh', backgroundColor: 'white', display: 'flex',alignItems:'center'}}>
+            <div style={{flex: 8, backgroundColor: 'white', display: 'flex',alignItems:'flex-start', paddingBottom:50, justifyContent:'center'}}>
                 <div style={{flex: 2, display: 'flex', alignItems: 'center', flexDirection: 'column', margin: 10, paddingRight:10}}>
                     <b>Order by:</b>
                     <Button
