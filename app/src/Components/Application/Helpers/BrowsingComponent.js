@@ -76,9 +76,11 @@ class BrowsingComponent extends React.Component {
             
             return (
                 <React.Fragment>
+                    <div style={{alignItems:"center"}}>
                     <h2>We found {this.props.total} matches for you !</h2>
-                    <b style={{fontWeight: 'normal', marginBottom: 5}}>{this.state.page} / {this.props.total}</b>
-                    <div style={{width: '70vw', display: 'flex'}}>
+                    </div>
+                    <b style={{fontWeight: 'normal', marginBottom: 5, alignSelf:'center'}}>{this.state.page} / {this.props.total}</b>
+                    <div style={{width: '80vw', display: 'flex'}}>
                         <div style={{width: '10vw', height: '60vh', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
                             <Button
                             onClick={this.goToPreviousPage}
@@ -128,8 +130,11 @@ class BrowsingComponent extends React.Component {
     render() {
          
         return (
-            <div style={{width: '98vw', height: '98vh', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column'}}>
+            <div style={{width: '98vw', height: '90vh', display: 'flex', justifyContent: 'space-around', alignItems: 'center', flexDirection: 'column', position:'relative'}}>
+                <div>
                 {this.outputMatches()}
+                </div>
+                <div style={{display: 'flex'}}>
                 <BrowsingFilters
                 orderBy={this.props.orderBy}
                 order={this.props.order}
@@ -145,6 +150,7 @@ class BrowsingComponent extends React.Component {
                 onResetClick={this.props.onResetClick}
                 rowHeight={ROW_HEIGHT}
                 />
+                </div>
             </div>
         )
 

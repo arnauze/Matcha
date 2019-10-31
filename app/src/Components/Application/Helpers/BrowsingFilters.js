@@ -31,7 +31,7 @@ export default class BrowsingFilters extends React.Component {
 
         return (
 
-            <div style={{flex: 8, width: '50vw', height: '15vh', backgroundColor: 'white', display: 'flex',}}>
+            <div style={{flex: 8, width: '50vw', height: '15vh', backgroundColor: 'white', display: 'flex',alignItems:'center'}}>
                 <div style={{flex: 2, display: 'flex', alignItems: 'center', flexDirection: 'column', margin: 10, paddingRight:10}}>
                     <b>Order by:</b>
                     <Button
@@ -55,26 +55,24 @@ export default class BrowsingFilters extends React.Component {
                             Reset
                     </Button>
                 </div>
-                <div style={{flex: 4, display: 'flex', alignItems: 'flex-start', flexDirection: 'column', paddingTop:10, margin: 10, }}>
+                <div style={{flex: 2, display: 'flex', alignItems: 'flex-start', flexDirection: 'column', paddingTop:10, margin: 10, }}>
                     <b>Filter by:</b>
                     <div style={{display: 'flex', flexDirection: 'row'}}>
                         <div style={{display: 'flex', flexDirection: 'column', flex: 2}}>
-                            <b style={{flex:1, height: this.props.rowHeight, fontWeight: 'normal', margin: 10, paddingBottom:5}}>Minimum common tags:</b>
-                            <b style={{height: this.props.rowHeight, fontWeight: 'normal', margin: 10,paddingBottom:5}}>Maximum distance:</b>
-                            <b style={{height: this.props.rowHeight, fontWeight: 'normal', margin: 10,paddingBottom:5}}>Minimum age:</b>
-                            <b style={{height: this.props.rowHeight, fontWeight: 'normal', margin: 10,paddingBottom:5}}>Minimum fame rating:</b>
-                        </div>
-                        <div style={{display: 'flex', flexDirection: 'column', flex: 2}}>
-                            <div style={{flex:1 ,height: this.props.rowHeight, margin: 10, display: 'flex', alignItems: 'center', justifyContent: 'space evenly', paddingBottom:5}}>
+                            <b style={{flex:1, height: this.props.rowHeight, fontWeight: 'normal', paddingBottom:5}}>Min. common tags:</b>
+                            <div style={{flex:1 ,height: this.props.rowHeight, display: 'flex', alignItems: 'center', justifyContent: 'space evenly'}}>
                                 <input type="number" onChange={this.props.onMinimumCommonTagsChange} value={this.props.minCommonTags === -1 ? "0" : this.props.minCommonTags}/>
                             </div>
-                            <div style={{height: this.props.rowHeight, margin: 10, display: 'flex', alignItems: 'center', justifyContent: 'space evenly', paddingBottom:5}}>
+                            <b style={{height: this.props.rowHeight, fontWeight: 'normal', paddingBottom:5}}>Max. distance:</b>
+                            <div style={{height: this.props.rowHeight, display: 'flex', alignItems: 'center', justifyContent: 'space evenly'}}>
                                 <input type="number" onChange={this.props.onMaximumDistanceChange} value={this.props.maxDistance === -1 ? "0" : this.props.maxDistance}/>
                             </div>
-                            <div style={{height: this.props.rowHeight, margin: 10, display: 'flex', alignItems: 'center', justifyContent: 'space evenly', paddingBottom:5}}>
+                            <b style={{height: this.props.rowHeight, fontWeight: 'normal',paddingBottom:5}}>Min. age:</b>
+                            <div style={{height: this.props.rowHeight,  display: 'flex', alignItems: 'center'}}>
                                 <input type="number" onChange={this.props.onMinimumAgeChange} value={this.props.minAge === -1 ? "0" : this.props.minAge}/>
                             </div>
-                            <div style={{height: this.props.rowHeight, margin: 10, display: 'flex', alignItems: 'center', justifyContent: 'space evenly', paddingBottom:5}}>
+                            <b style={{height: this.props.rowHeight, fontWeight: 'normal',paddingBottom:5}}>Min. fame rating:</b>
+                            <div style={{height: this.props.rowHeight, display: 'flex', alignItems: 'center'}}>
                                 <input type="number" onChange={this.props.onMinimumFameRatingChange} value={this.props.minFameRating === -1 ? "0" : this.props.minFameRating}/>
                             </div>
                         </div>
