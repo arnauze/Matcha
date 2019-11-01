@@ -133,10 +133,11 @@ class BrowsingComponent extends React.Component {
     render() {
          
         return (
-            <div style={{width: '98vw', height: '90vh', display: 'flex', justifyContent: 'center', alignItems: 'space-around', flexDirection: 'column', position:'relative'}}>
-                <div>
+            <div style={{width: '98vw', height: '90vh', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', position:'relative'}}>
+                <center><div>
                 {this.outputMatches()}
                 </div>
+                </center>
                 <div style={{display: 'flex'}}>
                 <BrowsingFilters
                 orderBy={this.props.orderBy}
