@@ -76,41 +76,44 @@ class BrowsingComponent extends React.Component {
             
             return (
                 <React.Fragment>
-                    <div style={{alignItems:"center", paddingTop:250}}>
-                    <h2>We found {this.props.total} matches for you !</h2>
-                    </div>
-                    <b style={{fontWeight: 'normal', marginBottom: 5, alignSelf:'center'}}>{this.state.page} / {this.props.total}</b>
-                    <div style={{width: '80vw', display: 'flex'}}>
-                        <div style={{width: '10vw', height: '60vh', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
-                            <Button
-                            onClick={this.goToPreviousPage}
-                            style={{fontSize: '0.8vw', margin: 20}}
-                            >
-                                <ArrowBackIcon
-                                style={{fontSize: '5vh'}}
-                                />
-                            </Button>
+                    <center>
+                        <div style={{alignItems:'center', justifyContent:'center', justifyItems:'center', alignContent:'center', paddingTop:250}}>
+                        <h2> We found {this.props.total} matches for you !</h2>
                         </div>
-                        <UserSummary
-                        reload={this.reload}
-                        user={user}
-                        onLikeClick={this.onLikeClick}
-                        onDeleteClick={this.onDeleteClick}
-                        addNotification={this.props.addNotification}
-                        changePage={this.props.changePage}
-                        />
-                        <div style={{width: '10vw', height: '60vh', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
-                            <Button
-                            onClick={this.goToNextPage}
-                            style={{fontSize: '0.8vw', margin: 20}}
-                            >
-                                <ArrowForwardIcon
-                                style={{fontSize: '5vh'}}
-                                />
-                            </Button>
+                            <b style={{fontWeight: 'normal', marginBottom: 5, alignSelf:'center'}}>{this.state.page} / {this.props.total}</b>
+                        <div style={{display: 'flex'}}>
+                            <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
+                                <Button
+                                onClick={this.goToPreviousPage}
+                                style={{fontSize: '0.8vw', margin: 20}}
+                                >
+                                    <ArrowBackIcon
+                                    style={{fontSize: '5vh'}}
+                                    />
+                                </Button>
+                            </div>
+                            <UserSummary
+                            reload={this.reload}
+                            user={user}
+                            onLikeClick={this.onLikeClick}
+                            onDeleteClick={this.onDeleteClick}
+                            addNotification={this.props.addNotification}
+                            changePage={this.props.changePage}
+                            />
+                            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
+                                <Button
+                                onClick={this.goToNextPage}
+                                style={{fontSize: '0.8vw', margin: 20}}
+                                >
+                                    <ArrowForwardIcon
+                                    style={{fontSize: '5vh'}}
+                                    />
+                                </Button>
+                            </div>
                         </div>
-                    </div>
-                    <b style={{fontWeight: 'normal', marginTop: 5}}>{this.state.page} / {this.props.total}</b>
+                        <b style={{fontWeight: 'normal', marginTop: 5}}>{this.state.page} / {this.props.total}</b>
+                    </center>
+                    
                 </React.Fragment>
 
             )

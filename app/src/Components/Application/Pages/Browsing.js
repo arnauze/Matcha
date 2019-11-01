@@ -318,7 +318,7 @@ class Browsing extends React.Component {
                 if (!this.state.filters.activated) {
 
                     return (
-                    
+                        <center>
                         <BrowsingComponent
                         reload={this.getMatches}
                         user={user}
@@ -341,6 +341,7 @@ class Browsing extends React.Component {
                         changePage={this.props.changePage}
                         change={this.changePage}
                         />
+                        </center>
 
                     )
 
@@ -374,6 +375,7 @@ class Browsing extends React.Component {
             } else {
 
                 return (
+                    <center>
                     <BrowsingComponent
                     reload={this.getMatches}
                     user={null}
@@ -396,6 +398,7 @@ class Browsing extends React.Component {
                     changePage={this.props.changePage}
                     change={this.changePage}
                     />
+                    </center>
                 )
     
             }
