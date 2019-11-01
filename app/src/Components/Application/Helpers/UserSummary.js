@@ -74,10 +74,10 @@ class UserSummary extends React.Component {
         var user = this.props.user
 
         return (
-
-            <div style={{width: '50vw', minHeight: '60vh', backgroundColor: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', border: '0.5px solid black', borderRadius: 10, justifyContent: 'center', position: 'relative'}}>
+            <center>
+            <div style={{width: '60vw', minHeight: '50vh', backgroundColor: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', border: '0.5px solid black', borderRadius: 10, justifyContent: 'center', position: 'relative'}}>
                 <img
-                style={{backgroundColor: 'white', border: '1px solid black', margin: 10, width: '6vw', height: '12vh', borderRadius: 120}}
+                style={{backgroundColor: 'white', border: '1px solid black', margin: 10, width: '12vw', height: '12vw', borderRadius: 120}}
                 src={user.profile_picture}
                 alt=""
                 />
@@ -85,15 +85,15 @@ class UserSummary extends React.Component {
                     <Button onClick={() => this.navigateToFriendProfile(user.username)}>
                         <b style={{fontSize: '1vw', fontWeight: '500', margin: 5, marginRight: 10}}>{user.full_name}</b>
                     </Button>
-                    <b style={{fontWeight: '100', fontSize: '0.7vw', color: 'red'}}>{this.renderFameRating(user)}</b>
+                    <b style={{fontWeight: '100', fontSize: '1.7vw', color: 'red'}}>{this.renderFameRating(user)}</b>
                 </div>
-                <b style={{margin: 5, fontSize: '0.8vw'}}>{user.age} years old</b>
-                <p style={{fontSize: '0.8vw'}}>{user.bio}</p>
-                <div style={{width: '30vw', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly'}}>
+                <b style={{margin: 5, fontSize: '1.8vw'}}>{user.age} years old</b>
+                <p style={{fontSize: '1.8vw'}}>{user.bio}</p>
+                <div style={{width: '40vw', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly'}}>
                     {
                         user.interests.map((item, index) => (
                             <div key={index}>
-                                <b style={{fontSize: '0.7vw'}}>
+                                <b style={{fontSize: '1.3vw'}}>
                                     {item}
                                 </b>
                             </div>
@@ -130,7 +130,7 @@ class UserSummary extends React.Component {
                     </Button>
                 </div>
             </div>
-
+            </center>          
         )
 
     }
