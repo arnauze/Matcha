@@ -64,12 +64,14 @@ export function startWebsocket(user, updateState, notifications, updateUser, rel
 
         }
 
-        var newItem = {data: message, timestamp: Date.now()}
-        notifications.push(newItem)
+        if (message !== "Error") {
+            var newItem = {data: message, timestamp: Date.now()}
+            notifications.push(newItem)
 
-        updateState({
-            notifications: notifications.filter(item => item === newItem)
-        }, () => updateUser())
+            updateState({
+                notifications: notifications.filter(item => item === newItem)
+            }, () => updateUser())
+        }
 
     }
 

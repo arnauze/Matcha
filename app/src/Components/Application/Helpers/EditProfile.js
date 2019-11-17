@@ -6,7 +6,6 @@ import { Button } from '@material-ui/core'
 import CheckIcon from '@material-ui/icons/Check'
 import CloseIcon from '@material-ui/icons/Close'
 import Geocode from "react-geocode"
-import ImageUploader from 'react-images-upload'
 import { API, Auth } from 'aws-amplify'
 
 Geocode.setApiKey(apiKey)
@@ -23,7 +22,7 @@ class EditProfile extends React.Component {
     // First name V
     // Password V
     // Email address V
-    // Location
+    // Location V
 
     state = {
         firstName: '',
@@ -179,12 +178,14 @@ class EditProfile extends React.Component {
 
     }
 
-    onPickImage = (file, path) => {
+    onPickImage = (e) => {
 
         this.setState({
             ...this.state,
-            medias: [...this.state.medias, path[0]]
+            medias: [...this.state.medias, { url: URL.createObjectURL(e.target.files[0]), file: e.target.files[0] }]
         })
+
+        e.target.value = ""
 
     }
 
@@ -193,6 +194,14 @@ class EditProfile extends React.Component {
         // Function called when I click on the update button
         // First I call my API to update my user in the database
         // Then if needed I update the password in Cognito
+
+        // Weird error here, when I send the images in the body, in the backend function I receive empty objects instead of medias
+
+        var i = -1
+        var medias = []
+        while ( ++i < this.state.medias.length ) {
+            medias.push(  this.state.medias[i].file )
+        }
 
         let apiName = 'Matcha'
         let path = '/users/' + this.props.user.info.username
@@ -206,7 +215,7 @@ class EditProfile extends React.Component {
                 sexualPreferences: this.state.sexualPreferences.length > 0 ? this.state.sexualPreferences : this.props.user.info.sexual_preferences,
                 interests: this.state.tags,
                 userLocation: this.state.foundLocation.address ? this.state.foundLocation : this.props.user.info.userLocation,
-                medias: this.state.medias
+                medias: medias
             }
         }
 
@@ -348,7 +357,7 @@ class EditProfile extends React.Component {
                                         if (index < 3) {
                                             return (
                                                 <div style={{width: 360, height: 240, backgroundColor: 'lightgray', position: 'relative'}}>
-                                                    <img key={index} style={{width: 360, height: 240}} alt="" src={item}/>
+                                                    <img key={index} style={{width: 360, height: 240}} alt="" src={item.url}/>
                                                     <CloseIcon style={{position: 'absolute', top: 0, right: 0}} onClick={() => this.onDeleteMedia(index)}/>
                                                 </div>
                                             )
@@ -362,7 +371,7 @@ class EditProfile extends React.Component {
                                         if (index >= 3) {
                                             return (
                                                 <div style={{width: 360, height: 240, backgroundColor: 'lightgray', position: 'relative'}}>
-                                                    <img key={index} style={{width: 360, height: 240}} alt="" src={item}/>
+                                                    <img key={index} style={{width: 360, height: 240}} alt="" src={item.url}/>
                                                     <CloseIcon style={{position: 'absolute', top: 0, right: 0}} onClick={() => this.onDeleteMedia(index)}/>
                                                 </div>
                                             )
@@ -372,11 +381,9 @@ class EditProfile extends React.Component {
                                 {
                                     this.state.medias.length < 5 ?
                                         <div style={{width: 360, height: 240, backgroundColor: 'lightgray', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-                                            <ImageUploader
-                                            withIcon={false}
-                                            buttonText='Choose images'
-                                            onChange={this.onPickImage}
-                                            imgExtension={['.jpeg', '.png']}
+                                            <input
+                                                type="file" accept='image/png'
+                                                onChange={(e) => this.onPickImage(e)}
                                             />
                                         </div>
                                     :

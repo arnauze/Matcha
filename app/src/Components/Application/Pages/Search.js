@@ -25,10 +25,16 @@ class Search extends React.Component {
             age: [0, 99],
             fameRating: [0, 5]
         },
+        searched: false,
         matches: []
     }
 
     getMatches = () => {
+
+        this.setState({
+            ...this.state,
+            searched: false
+        })
 
         let apiName = 'Matcha'
         let path = '/browsing/user/' + this.props.user.info.username
@@ -55,7 +61,8 @@ class Search extends React.Component {
                 ...this.state,
                 loading: false,
                 matches: finalData,
-                sourceData: data
+                sourceData: data,
+                searched: true
             })
 
         })
@@ -375,7 +382,7 @@ class Search extends React.Component {
         console.log(this.state)
 
         return (
-            <div style={{display: 'flex', flexDirection:'column', alignItems: 'center', width: '98vw', margin: 15, marginTop: 60, justifyContent:'space-around', flexWrap: 'wrap', position:'relative'}}>
+            <div style={{display: 'flex', flexDirection:'column', alignItems: 'center', width: '98vw', margin: 15, marginTop: 60, marginBottom: 60, justifyContent:'space-around', flexWrap: 'wrap', position:'relative'}}>
                 <SearchFilters
                 fameRating={this.state.searchFilters.fameRating}
                 age={this.state.searchFilters.age}
@@ -402,18 +409,24 @@ class Search extends React.Component {
                 />
                 <List>
                     {
-                        this.state.matches.map((item, index) => (
-                            <ListItem key={index}>
-                                <UserSummary
-                                user={item}
-                                reload={this.getMatches}
-                                onDeleteClick={this.onDeleteClick}
-                                addNotification={this.props.addNotification}
-                                changePage={this.props.changePage}
-                                />
+                        this.state.matches.length === 0 && this.state.searched
+                        ?
+                            <ListItem>
+                                <b style={{fontSize: '1vw'}}>Couldn't find anybody matching your criterias</b>
                             </ListItem>
+                        :
+                            this.state.matches.map((item, index) => (
+                                <ListItem key={index}>
+                                    <UserSummary
+                                    user={item}
+                                    reload={this.getMatches}
+                                    onDeleteClick={this.onDeleteClick}
+                                    addNotification={this.props.addNotification}
+                                    changePage={this.props.changePage}
+                                    />
+                                </ListItem>
 
-                        ))
+                            ))
                     }
                 </List>
             </div>

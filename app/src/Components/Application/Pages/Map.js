@@ -52,15 +52,17 @@ class Map extends React.Component {
                             null
                         :
                             this.state.users.map((item, index) => {
-                                return (
-                                    <Marker
-                                    onClick={() => item.username !== this.props.user.info.username ? this.props.changePage({text: "FRIEND_PROFILE", var: {username: item.username}}) : null}
-                                    key={index}
-                                    title={item.full_name}
-                                    position={{lat: item.userLocation.lat, lng: item.userLocation.lng}}
-                                    options={{icon: item.username===this.props.user.info.username ? "http://maps.google.com/mapfiles/ms/icons/blue-dot.png" : "http://maps.google.com/mapfiles/ms/icons/pink-dot.png"}}
-                                    />
-                                )
+                                if (item.userLocation) {
+                                    return (
+                                        <Marker
+                                        onClick={() => item.username !== this.props.user.info.username ? this.props.changePage({text: "FRIEND_PROFILE", var: {username: item.username}}) : null}
+                                        key={index}
+                                        title={item.full_name}
+                                        position={{lat: item.userLocation.lat, lng: item.userLocation.lng}}
+                                        options={{icon: item.username===this.props.user.info.username ? "http://maps.google.com/mapfiles/ms/icons/blue-dot.png" : "http://maps.google.com/mapfiles/ms/icons/pink-dot.png"}}
+                                        />
+                                    )
+                                } else return null
                             })    
                     }
                 </GMap>

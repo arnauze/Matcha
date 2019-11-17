@@ -89,15 +89,34 @@ class UserSummary extends React.Component {
                 </div>
                 <b style={{margin: 5, fontSize: '1.8vw'}}>{user.age} years old</b>
                 <p style={{fontSize: '1.8vw'}}>{user.bio}</p>
-                <div style={{width: '40vw', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly'}}>
+                <div style={{width: '40vw', display: 'flex', alignItems: 'center'}}>
                     {
-                        user.interests.map((item, index) => (
-                            <div key={index}>
-                                <b style={{fontSize: '1.3vw'}}>
-                                    {item}
-                                </b>
-                            </div>
-                        ))
+                        user.interests.map((item, index) => {
+                            if (index < 8)
+                                return (
+                                    <div key={index} style={{flex: 1, margin: 5}}>
+                                        <b style={{fontSize: '1.3vw'}}>
+                                            {item}
+                                        </b>
+                                    </div>
+                                )
+                            else return null
+                        })
+                    }
+                </div>
+                <div style={{width: '40vw', display: 'flex', alignItems: 'center'}}>
+                    {
+                        user.interests.map((item, index) => {
+                            if (index > 8)
+                                return (
+                                    <div key={index} style={{flex: 1, margin: 5}}>
+                                        <b style={{fontSize: '1.3vw'}}>
+                                            {item}
+                                        </b>
+                                    </div>
+                                )
+                            else return null
+                        })
                     }
                 </div>
                 <div style={{maxWidth: '30vw', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
@@ -115,7 +134,7 @@ class UserSummary extends React.Component {
                         }
                     </div>
                 </div>
-                <div style={{display: 'flex', width: '20vw', justifyContent: 'space-between', position: 'absolute', bottom: 0}}>
+                <div style={{display: 'flex', width: '20vw', justifyContent: 'space-between'}}>
                     <Button onClick={() => this.onLikeClick(user)}>
                         <FavoriteIcon
                         color="secondary" 

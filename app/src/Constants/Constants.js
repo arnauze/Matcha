@@ -11,6 +11,12 @@ export const configs = {
                 endpoint: "https://32j573embh.execute-api.us-east-2.amazonaws.com/dev"
             }
         ]
+    },
+    Storage: {
+        AWSS3: {
+            bucket: 'matcha-dev',
+            region: 'us-east-2'
+        }
     }
 }
 

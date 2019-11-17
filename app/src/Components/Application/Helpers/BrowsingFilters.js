@@ -31,7 +31,7 @@ export default class BrowsingFilters extends React.Component {
 
         return (
 
-            <div style={{flex: 8, backgroundColor: 'white', display: 'flex',alignItems:'flex-start', paddingBottom:50, justifyContent:'center'}}>
+            <div style={{backgroundColor: 'white', display: 'flex',alignItems:'center', paddingBottom:50, justifyContent:'center', width: '50vw'}}>
                 <div style={{flex: 2, display: 'flex', alignItems: 'center', flexDirection: 'column', margin: 10, paddingRight:10}}>
                     <b>Order by:</b>
                     <Button
@@ -46,14 +46,6 @@ export default class BrowsingFilters extends React.Component {
                     <Button
                     onClick={() => this.props.order('fame_rating')}
                     color={this.props.orderBy === 'fame_rating' ? 'primary' : "default"}>Fame rating</Button>
-                </div>
-                <div style={{flex: 2, display: 'flex', justifyContent: 'start', alignItems: 'center', flexDirection: 'column'}}>
-                    <Button variant="contained" color="primary" onClick={this.onFilterClick} style={{margin: 5}}>
-                            Filter
-                    </Button>
-                    <Button variant="contained" color="secondary" onClick={this.onResetClick} style={{margin: 5}} disabled={this.state.disabled}>
-                            Reset
-                    </Button>
                 </div>
                 <div style={{flex: 2, display: 'flex', alignItems: 'flex-start', flexDirection: 'column', paddingTop:10, margin: 10, }}>
                     <b>Filter by:</b>
@@ -78,7 +70,14 @@ export default class BrowsingFilters extends React.Component {
                         </div>
                     </div>
                 </div>
-
+                <div style={{flex: 2, display: 'flex', justifyContent: 'start', alignItems: 'center', flexDirection: 'column'}}>
+                    <Button variant="contained" color="primary" onClick={this.onFilterClick} style={{margin: 5}}>
+                            Filter
+                    </Button>
+                    <Button variant="contained" color="secondary" onClick={this.onResetClick} style={{margin: 5}} disabled={this.state.disabled}>
+                            Reset
+                    </Button>
+                </div>
             </div>
 
         )
